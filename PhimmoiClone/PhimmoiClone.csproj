@@ -28,4 +28,9 @@
     <Folder Include="Areas\Identity\Data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Role\GetUser.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Role\Index.cshtml" />
+  </ItemGroup>
+
 </Project>
