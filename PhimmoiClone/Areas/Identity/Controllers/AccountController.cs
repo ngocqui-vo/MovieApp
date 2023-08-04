@@ -16,19 +16,19 @@ namespace PhimmoiClone.Areas.Identity.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+       
         private readonly ILogger<AccountController> _logger;
         private readonly IEmailSender _emailSender;
         public AccountController(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            RoleManager<IdentityRole> roleManager,
+            
             ILogger<AccountController> logger,
             IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _roleManager = roleManager;
+            
             _logger = logger;
             _emailSender = emailSender;
         }
@@ -118,16 +118,16 @@ namespace PhimmoiClone.Areas.Identity.Controllers
                             registerModel.Email,
                             "Xác nhận địa chỉ Email",
                             @$"Bạn đã đăng ký tài khoản trên Phimmoi, 
-                           hãy <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>bấm vào đây</a> 
+                           hãy <a href='{HtmlEncoder.Default.Encode(callbackUrl!)}'>bấm vào đây</a> 
                            để kích hoạt tài khoản."
                         );
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return LocalRedirect(Url.Action(nameof(RegisterConfirmation)));
+                        return LocalRedirect(Url.Action(nameof(RegisterConfirmation))!);
                     }
                 }
-                ModelState.AddModelError("", result.ToString());
+                ModelState.AddModelError("", result.ToString()!);
             }
             return View(registerModel);
 
