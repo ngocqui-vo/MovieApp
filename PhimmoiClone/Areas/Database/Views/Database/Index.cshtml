@@ -1,0 +1,35 @@
+@using Org.BouncyCastle.Crypto.Digests
+@using Microsoft.EntityFrameworkCore
+@model PhimmoiClone.Data.MyDbContext
+
+@{
+}
+<partial name="_StatusMessage"/>
+
+@if (await Model.Database.CanConnectAsync())
+{
+    <h2>
+        Tất cả các bảng:
+    </h2>
+    await Model.Database.OpenConnectionAsync();
+    var table = Model.Database.GetDbConnection().GetSchema("Tables");
+        
+    <ul>
+        @foreach (System.Data.DataRow row in table.Rows)
+        {
+            <li>
+                @row["TABLE_NAME"]
+            </li>
+        }
+    </ul>
+    <form method="POST" asp-controller="Database" asp-action="DeleteDatabase">
+        <button class="btn btn-danger" type="submit">Xóa database</button>
+    </form>
+}
+else 
+{
+    <h1>Hiện tại chưa có hoặc không thể kết nối database</h1>
+    <form method="POST" asp-controller="Database" asp-action="CreateDatabase">
+        <button class="btn btn-danger" type="submit">Tạo database</button>
+    </form>
+}
