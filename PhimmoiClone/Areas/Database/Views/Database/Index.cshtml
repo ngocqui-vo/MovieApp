@@ -1,18 +1,55 @@
-@model dynamic
-
+@using PhimmoiClone.Data
+@using Microsoft.EntityFrameworkCore
+@model MyDbContext
 @{
-    Layout = null;
+    var canConnect = await Model.Database.CanConnectAsync();
 }
 
-<!DOCTYPE html>
+<partial name="_StatusMessage"/>
 
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
-<div>
-      
-</div>
-</body>
-</html>
+@if (canConnect)
+{
+    await Model.Database.OpenConnectionAsync();
+    var table = Model.Database.GetDbConnection().GetSchema("Tables");
+    <h1>Danh sách table</h1>
+    <ul>
+        
+        @foreach (System.Data.DataRow row in table.Rows)
+        {
+            <li>
+                @row["TABLE_NAME"]
+            </li>
+        }
+    </ul>
+    
+    var migrations = Model.Database.GetMigrations();
+        
+    <h1>Danh sách migrations</h1>
+    <ul>
+        @foreach (var migration in migrations)
+        {
+            <li>
+                @migration
+            </li>
+        }
+    </ul>
+    
+    var pendingMigrations = await Model.Database.GetPendingMigrationsAsync();
+        
+    <h1>Danh sách migrations pending</h1>
+    <ul>
+        @foreach (var migration in pendingMigrations)
+        {
+            <li>
+                @migration
+            </li>
+        }
+    </ul>
+    
+    <a class="btn btn-danger" asp-action="DeleteDatabase">Xóa database</a>
+}
+else
+{
+    <h1>Chưa có database!!!</h1>
+    <a class="btn btn-danger" asp-action="CreateDatabase">Tạo database</a>
+}
