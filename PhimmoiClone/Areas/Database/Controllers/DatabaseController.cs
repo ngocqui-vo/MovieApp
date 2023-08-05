@@ -60,5 +60,4 @@ public class DatabaseController : Controller
         return RedirectToAction("Index");
     }
 
-    
 }

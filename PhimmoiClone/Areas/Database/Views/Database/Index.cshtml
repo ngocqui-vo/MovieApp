@@ -22,8 +22,8 @@
         }
     </ul>
     
-    var migrations = Model.Database.GetMigrations();
-        
+    var migrations = Model.Database.GetAppliedMigrations();
+    var pendingMigrations = await Model.Database.GetPendingMigrationsAsync();
     <h1>Danh sách migrations</h1>
     <ul>
         @foreach (var migration in migrations)
@@ -32,16 +32,10 @@
                 @migration
             </li>
         }
-    </ul>
-    
-    var pendingMigrations = await Model.Database.GetPendingMigrationsAsync();
-        
-    <h1>Danh sách migrations pending</h1>
-    <ul>
         @foreach (var migration in pendingMigrations)
         {
             <li>
-                @migration
+                @migration (pending)
             </li>
         }
     </ul>
