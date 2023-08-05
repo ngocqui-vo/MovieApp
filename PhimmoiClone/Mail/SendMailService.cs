@@ -1,4 +1,5 @@
-﻿using MimeKit;
+﻿using MailKit.Net.Smtp;
+using MimeKit;
 using MailKit.Security;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
@@ -33,17 +34,20 @@ namespace PhimmoiClone.Mail
             message.From.Add(new MailboxAddress(_mailSettings.DisplayName, _mailSettings.Mail));
             message.To.Add(MailboxAddress.Parse(email));
             message.Subject = subject;
+            
 
             var builder = new BodyBuilder();
             builder.HtmlBody = htmlMessage;
+            message.Body = builder.ToMessageBody();
 
             // dùng SmtpClient của MailKit
-            using var smtp = new MailKit.Net.Smtp.SmtpClient();
+            using var smtp = new SmtpClient();
 
             try
             {
                 smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
                 smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
+                await smtp.SendAsync(message);
             }
             catch (Exception e)
             {

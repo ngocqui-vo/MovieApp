@@ -69,12 +69,11 @@ namespace PhimmoiClone.Areas.Identity.Controllers
                 {
                     return View("Lockout");
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Không thể đăng nhập");
-                    return View(loginModel);
-                }
+                return RedirectToAction("Index", "Home", new {area = ""});
+
             }
+
+            ModelState.AddModelError("", "Không thể đăng nhập");
             return View(loginModel);
         }
 
@@ -122,7 +121,7 @@ namespace PhimmoiClone.Areas.Identity.Controllers
                            để kích hoạt tài khoản."
                         );
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    if (_userManager.Options.SignIn.RequireConfirmedEmail)
                     {
                         return LocalRedirect(Url.Action(nameof(RegisterConfirmation))!);
                     }
