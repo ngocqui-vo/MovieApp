@@ -23,6 +23,8 @@ public class RoleController : Controller
         _roleManager = roleManager;
         _userManager = userManager;
     }
+    [TempData] 
+    public string? StatusMessage { get; set; }
 
     public IActionResult Index()
     {
@@ -34,8 +36,40 @@ public class RoleController : Controller
     {
         return View(new AddRoleViewModel());
     }
-    
-    
+
+    [HttpPost]
+    public async Task<IActionResult> AddRole(AddRoleViewModel newRole)
+    {
+        var roleExist = await _ctx.Roles
+                                .FirstOrDefaultAsync(r => r.Name == newRole.Name);
+        if (roleExist != null)
+        {
+            StatusMessage = "Error: role đã tồn tại";
+            return RedirectToAction("AddRole");
+        }
+
+        var identityRole = new IdentityRole()
+        {
+            Name = newRole.Name,
+            NormalizedName = newRole.NormalizeName
+        };
+        await _ctx.Roles.AddAsync(identityRole);
+        await _ctx.SaveChangesAsync();
+        StatusMessage = "Thêm role thành công";
+        return RedirectToAction("AddRole");
+    }
+
+    public async Task<IActionResult> EditRole(string? roleName)
+    {
+        var role = await _ctx.Roles
+                                    .FirstOrDefaultAsync(r => r.Name == roleName);
+        if (role == null)
+        {
+            StatusMessage = "Error: role không tồn tại";
+            return RedirectToAction("Index");
+        }
+        
+    }
     public IActionResult GetAllUser()
     {
         var users = _ctx.Users.ToList();
