@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PhimmoiClone.Areas.Movie.EntityConfig;
-using PhimmoiClone.Areas.Movie.Models;
+using PhimmoiClone.Areas.Cinema.EntityConfig;
+using PhimmoiClone.Areas.Cinema.Models;
 
 namespace PhimmoiClone.Data
 {

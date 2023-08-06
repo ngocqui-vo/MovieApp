@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace PhimmoiClone.Areas.Movie.Controllers;
+namespace PhimmoiClone.Areas.Cinema.Controllers;
 
-public class MovieController : Controller
+public class GenreController : Controller
 {
-    
+    // GET
     public IActionResult Index()
     {
         return View();

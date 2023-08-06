@@ -1,14 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using PhimmoiClone.Areas.Cinema.Models;
 
-namespace PhimmoiClone.Areas.Movie.Models;
+namespace PhimmoiClone.Areas.Cinema.ViewModel;
 
-public class Episode
+public class EpisodeViewModel
 {
-    [Key]
+    
     public int Id { get; set; }
+    [Required]
     public float? EpNumber { get; set; }
     public string? EpString { get; set; }
+    [Required]
     public string? LinkEmbed { get; set; }
+    [Required]
     public int MovieId { get; set; }
-    public Movie? Movie { get; set; }
 }

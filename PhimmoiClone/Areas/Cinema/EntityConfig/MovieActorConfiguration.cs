@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PhimmoiClone.Areas.Movie.Models;
+using PhimmoiClone.Areas.Cinema.Models;
 
-namespace PhimmoiClone.Areas.Movie.EntityConfig;
+namespace PhimmoiClone.Areas.Cinema.EntityConfig;
 
 public class MovieActorConfiguration : IEntityTypeConfiguration<MovieActor>
 {
@@ -11,7 +11,7 @@ public class MovieActorConfiguration : IEntityTypeConfiguration<MovieActor>
         builder.HasKey(ma => new { ma.MovieId, ma.ActorId });
 
         builder
-            .HasOne<Models.Movie>(ma => ma.Movie)
+            .HasOne<Movie>(ma => ma.Movie)
             .WithMany(m => m.MovieActors)
             .HasForeignKey(ma => ma.MovieId);
 

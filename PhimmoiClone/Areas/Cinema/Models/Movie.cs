@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PhimmoiClone.Areas.Movie.Models;
+namespace PhimmoiClone.Areas.Cinema.Models;
 
 public class Movie
 {

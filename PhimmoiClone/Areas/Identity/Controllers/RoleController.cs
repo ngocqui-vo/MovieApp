@@ -59,17 +59,17 @@ public class RoleController : Controller
         return RedirectToAction("AddRole");
     }
 
-    public async Task<IActionResult> EditRole(string? roleName)
-    {
-        var role = await _ctx.Roles
-                                    .FirstOrDefaultAsync(r => r.Name == roleName);
-        if (role == null)
-        {
-            StatusMessage = "Error: role không tồn tại";
-            return RedirectToAction("Index");
-        }
-        
-    }
+    // public async Task<IActionResult> EditRole(string? roleName)
+    // {
+    //     var role = await _ctx.Roles
+    //                                 .FirstOrDefaultAsync(r => r.Name == roleName);
+    //     if (role == null)
+    //     {
+    //         StatusMessage = "Error: role không tồn tại";
+    //         return RedirectToAction("Index");
+    //     }
+    //     
+    // }
     public IActionResult GetAllUser()
     {
         var users = _ctx.Users.ToList();
