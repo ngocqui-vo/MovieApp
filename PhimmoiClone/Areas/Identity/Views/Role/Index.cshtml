@@ -1,8 +1,19 @@
-@model System.Collections.Generic.List<Microsoft.AspNetCore.Identity.IdentityUser>
+@model System.Collections.Generic.List<Microsoft.AspNetCore.Identity.IdentityRole>
 
 @{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+    ViewData["Title"] = "Tất cả roles";
 }
 
-<h2>title</h2>
+<h1>Tất cả các roles:</h1>
+
+@if (Model is {Count: > 0})
+{
+    <ul>
+        @foreach (var role in Model)
+        {
+            <li>
+                @role.Name
+            </li>
+        }
+    </ul>
+}

@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PhimmoiClone.Areas.Identity.Models;
 using PhimmoiClone.Data;
 
 namespace PhimmoiClone.Areas.Identity.Controllers;
 
+[Area("Identity")]
+[Route("Role/[action]")]
 public class RoleController : Controller
 {
     private readonly MyDbContext _ctx;
@@ -20,21 +23,42 @@ public class RoleController : Controller
         _roleManager = roleManager;
         _userManager = userManager;
     }
-    // GET
+
     public IActionResult Index()
+    {
+        var roles = _roleManager.Roles.ToList();
+        return View(roles);
+    }
+
+    public IActionResult AddRole()
+    {
+        return View(new AddRoleViewModel());
+    }
+    
+    
+    public IActionResult GetAllUser()
     {
         var users = _ctx.Users.ToList();
         return View(users);
     }
 
-    public IActionResult GetUser(string? id)
+    public async Task<IActionResult> GetUser(string? username)
     {
-        if (id != null)
+        if (username != null)
         {
-            var user = _ctx.Users.FirstOrDefault(user => user.Id == id);
+            var user = _ctx.Users.FirstOrDefault(user => user.UserName == username);
+            if (user != null)
+            {
+                var userRoles = await _userManager.GetRolesAsync(user);
+                ViewData["UserRoles"] = userRoles;
+            }
+
             return View(user);
         }
 
         return NotFound();
     }
+    
+    
+    
 }

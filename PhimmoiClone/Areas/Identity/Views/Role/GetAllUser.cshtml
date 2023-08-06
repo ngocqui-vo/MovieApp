@@ -1,0 +1,15 @@
+@model System.Collections.Generic.List<Microsoft.AspNetCore.Identity.IdentityUser>
+
+@{
+    ViewBag.Title = "All user";
+}
+
+<h1>Tất cả user</h1>
+<ul>
+    @foreach (var user in Model)
+    {
+        <li>
+            <a asp-action="GetUser" asp-route-username="@user.UserName">@user.UserName</a>
+        </li>
+    }
+</ul>
