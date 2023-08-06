@@ -28,8 +28,21 @@ public class RoleController : Controller
 
     public IActionResult Index()
     {
-        var roles = _roleManager.Roles.ToList();
+        var roles = _ctx.Roles.ToList();
         return View(roles);
+    }
+
+    public async Task<IActionResult> RoleDetail(string? roleName)
+    {
+        var role = await _ctx.Roles.FirstOrDefaultAsync(r => r.Name == roleName);
+        if (role == null)
+        {
+            StatusMessage = "Không tìm thấy role";
+            return RedirectToAction("Index");
+        }
+
+        var claims = await _roleManager.GetClaimsAsync(role);
+        return View(role);
     }
 
     public IActionResult AddRole()
@@ -59,17 +72,17 @@ public class RoleController : Controller
         return RedirectToAction("AddRole");
     }
 
-    public async Task<IActionResult> EditRole(string? roleName)
-    {
-        var role = await _ctx.Roles
-                                    .FirstOrDefaultAsync(r => r.Name == roleName);
-        if (role == null)
-        {
-            StatusMessage = "Error: role không tồn tại";
-            return RedirectToAction("Index");
-        }
-        
-    }
+    //public async Task<IActionResult> EditRole(string? roleName)
+    //{
+    //    var role = await _ctx.Roles
+    //                                .FirstOrDefaultAsync(r => r.Name == roleName);
+    //    if (role == null)
+    //    {
+    //        StatusMessage = "Error: role không tồn tại";
+    //        return RedirectToAction("Index");
+    //    }
+
+    //}
     public IActionResult GetAllUser()
     {
         var users = _ctx.Users.ToList();
