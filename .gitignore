@@ -364,4 +364,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # App settings
-appsettings.json
+PhimmoiClone/appsettings.json
