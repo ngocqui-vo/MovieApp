@@ -72,6 +72,7 @@ public class RoleController : Controller
         return RedirectToAction("AddRole");
     }
 
+
     //public async Task<IActionResult> EditRole(string? roleName)
     //{
     //    var role = await _ctx.Roles
@@ -83,6 +84,7 @@ public class RoleController : Controller
     //    }
 
     //}
+
     public IActionResult GetAllUser()
     {
         var users = _ctx.Users.ToList();

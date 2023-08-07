@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Cinema\Services\ActorServices\" />
     <Folder Include="Areas\Database\Models\" />
     <Folder Include="Areas\Identity\Data\" />
   </ItemGroup>
