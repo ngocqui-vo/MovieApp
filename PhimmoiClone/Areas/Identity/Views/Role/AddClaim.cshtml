@@ -5,19 +5,20 @@
     ViewBag.Title = "Add Claim";
     var role = ViewData["Role"] as IdentityRole;
 }
+<partial name="_StatusMessage"/>
 
 <h2>Thêm claim cho role: @role?.Name</h2>
 
 <form asp-action="AddClaim" method="POST">
     <div class="form-outline mb-4">
         <input asp-for="Type" id="email" class="form-control" />
-        <label class="form-label" for="email">Email</label>
+        <label class="form-label" for="email">Claim Type</label>
     </div>
     
     
     <div class="form-outline mb-4">
         <input asp-for="Value" id="username" class="form-control" />
-        <label class="form-label" for="username">Username</label>
+        <label class="form-label" for="username">Claim Value</label>
     </div>
     <input type="hidden" asp-for="RoleId" value="@role?.Id">
     <button type="submit" class="btn btn-primary btn-block mb-4">Tạo Role</button>

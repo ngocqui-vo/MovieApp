@@ -7,6 +7,7 @@ using PhimmoiClone.Ultilities;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Encodings.Web;
+using Microsoft.EntityFrameworkCore;
 
 namespace PhimmoiClone.Areas.Identity.Controllers
 {
@@ -32,8 +33,9 @@ namespace PhimmoiClone.Areas.Identity.Controllers
             _logger = logger;
             _emailSender = emailSender;
         }
-        
 
+        
+        
         [HttpGet]
         public IActionResult Login()
         {

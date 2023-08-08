@@ -1,0 +1,45 @@
+@using Microsoft.AspNetCore.Identity
+@model Microsoft.AspNetCore.Identity.IdentityUser?
+
+@{
+    ViewBag.Title = "Thông tin user";
+    var userRoles = ViewData["UserRoles"] as List<string>;
+    var userClaims = ViewData["UserClaims"] as List<IdentityUserClaim<string>>;
+}
+
+<h1>Thông tin user: @Model?.UserName</h1>
+
+<h2>User claims: </h2>
+
+@if (userClaims is {Count: > 0 })
+{   <ul>
+        @foreach (var claim in userClaims)
+        {
+            <li>
+                @claim
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p class="text-danger">Chưa có role nào</p>
+}
+
+
+<h3>Tất cả roles:</h3>
+
+@if (userRoles is {Count: > 0 })
+{   <ul>
+        @foreach (var role in userRoles)
+        {
+            <li>
+                @role
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p class="text-danger">Chưa có role nào</p>
+}
