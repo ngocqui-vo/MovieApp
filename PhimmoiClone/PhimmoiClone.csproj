@@ -33,6 +33,7 @@
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Role\GetUser.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Role\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Views\Claim\AddClaim.cshtml" />
   </ItemGroup>
 
 </Project>

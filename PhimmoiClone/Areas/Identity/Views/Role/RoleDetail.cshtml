@@ -1,8 +1,23 @@
+@using System.Security.Claims
 @model Microsoft.AspNetCore.Identity.IdentityRole
 
 @{
     ViewBag.Title = "Role Details";
+    var claims = ViewData["Claims"] as List<Claim>;
 }
 
-<h2>Thông tin role: @Model.Name</h2>
+<h1>Thông tin role: @Model.Name</h1>
 
+<a asp-action="" class="btn btn-danger">Xóa role</a>
+<a asp-action="" class="btn btn-success">Thêm claim</a>
+
+<h2>Tất cả claims: </h2>
+@if (claims != null)
+{
+    <ul>
+        @foreach (var claim in claims)
+        {
+            <li>@claim.Type = @claim.Value</li>
+        }
+    </ul>
+}

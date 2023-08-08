@@ -1,0 +1,9 @@
+@using Microsoft.AspNetCore.Identity
+@model PhimmoiClone.Areas.Identity.Models.AddRoleViewModel
+
+@{
+    ViewBag.Title = "Add Claim";
+    var role = ViewData["Role"] as IdentityRole;
+}
+
+<h2>Thêm claim cho role: @role?.Name</h2>

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,7 @@ public class RoleController : Controller
         return View(roles);
     }
 
+   
     public async Task<IActionResult> RoleDetail(string? roleName)
     {
         var role = await _ctx.Roles.FirstOrDefaultAsync(r => r.Name == roleName);
@@ -42,8 +44,10 @@ public class RoleController : Controller
         }
 
         var claims = await _roleManager.GetClaimsAsync(role);
+        ViewData["Claims"] = claims;
         return View(role);
     }
+    
 
     public IActionResult AddRole()
     {
@@ -84,7 +88,23 @@ public class RoleController : Controller
     //    }
 
     //}
+    
+    public async Task<IActionResult> AddClaim(string roleName)
+    {
+        var role = await _ctx.Roles.FirstOrDefaultAsync(r => r.Name == roleName);
+        ViewData["Role"] = role;
+        return View(new AddRoleViewModel());
+    }
 
+    // public IActionResult AddClaim(AddClaimViewModel newClaim)
+    // {
+    //     var c = new IdentityRoleClaim<string>()
+    //     {
+    //         RoleId = 
+    //     };
+    //     
+    //     c.
+    // }
     public IActionResult GetAllUser()
     {
         var users = _ctx.Users.ToList();

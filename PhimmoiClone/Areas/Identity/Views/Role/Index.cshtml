@@ -4,6 +4,7 @@
     ViewData["Title"] = "Tất cả roles";
 }
 
+<a asp-action="AddRole" class="btn btn-success">Thêm Role</a>
 <h1>Tất cả các roles:</h1>
 
 @if (Model is {Count: > 0})
@@ -12,7 +13,7 @@
         @foreach (var role in Model)
         {
             <li>
-                @role.Name
+                <a asp-action="RoleDetail" asp-route-roleName="@role.Name">@role.Name</a>
             </li>
         }
     </ul>
