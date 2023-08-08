@@ -1,5 +1,5 @@
 @using Microsoft.AspNetCore.Identity
-@model PhimmoiClone.Areas.Identity.Models.AddRoleViewModel
+@model PhimmoiClone.Areas.Identity.Models.AddClaimViewModel
 
 @{
     ViewBag.Title = "Add Claim";
@@ -7,3 +7,20 @@
 }
 
 <h2>Thêm claim cho role: @role?.Name</h2>
+
+<form asp-action="AddClaim" method="POST">
+    <div class="form-outline mb-4">
+        <input asp-for="Type" id="email" class="form-control" />
+        <label class="form-label" for="email">Email</label>
+    </div>
+    
+    
+    <div class="form-outline mb-4">
+        <input asp-for="Value" id="username" class="form-control" />
+        <label class="form-label" for="username">Username</label>
+    </div>
+    <input type="hidden" asp-for="RoleId" value="@role?.Id">
+    <button type="submit" class="btn btn-primary btn-block mb-4">Tạo Role</button>
+    
+    
+</form>

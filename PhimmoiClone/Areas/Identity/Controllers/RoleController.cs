@@ -93,7 +93,31 @@ public class RoleController : Controller
     {
         var role = await _ctx.Roles.FirstOrDefaultAsync(r => r.Name == roleName);
         ViewData["Role"] = role;
-        return View(new AddRoleViewModel());
+        return View(new AddClaimViewModel());
+    }
+    [HttpPost]
+    public async Task<IActionResult> AddClaim(AddClaimViewModel addClaimModel)
+    {
+        if (ModelState.IsValid)
+        {
+            var newClaim = new IdentityRoleClaim<string?>()
+            {
+                RoleId = addClaimModel.RoleId,
+                ClaimType = addClaimModel.Type,
+                ClaimValue = addClaimModel.Value
+            };
+            await _ctx.RoleClaims.AddAsync(newClaim);
+            await _ctx.SaveChangesAsync();
+            StatusMessage = "thêm thành công claim";
+            
+        }
+        else
+        {
+            StatusMessage = "Error: thêm claim thất bại";
+        }
+        var role = await _ctx.Roles.FirstOrDefaultAsync(r => r.Id == addClaimModel.RoleId);
+        return RedirectToAction("AddClaim", new {roleName = role?.Name});
+       
     }
 
     // public IActionResult AddClaim(AddClaimViewModel newClaim)
