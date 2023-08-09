@@ -1,10 +1,11 @@
 @using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
 @model Microsoft.AspNetCore.Identity.IdentityUser?
 
 @{
     ViewBag.Title = "Thông tin user";
     var userRoles = ViewData["UserRoles"] as List<string>;
-    var userClaims = ViewData["UserClaims"] as List<IdentityUserClaim<string>>;
+    var userClaims = ViewData["UserClaims"] as List<Claim>;
 }
 
 <h1>Thông tin user: @Model?.UserName</h1>

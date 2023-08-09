@@ -75,21 +75,26 @@ public class RoleController : Controller
         return RedirectToAction("AddRole");
     }
 
-    public IActionResult GetAllUser()
+    public async Task<IActionResult> GetAllUser(string roleId)
     {
-        var users = _ctx.Users.ToList();
+
+        var userRoles = await _ctx.UserRoles
+            .Where(ur => ur.RoleId == roleId)
+            .ToListAsync();
+        
+        
         return View(users);
     }
 
-    public async Task<IActionResult> GetUser(string? username)
+    public async Task<IActionResult> EditUserRoles(string? userId)
     {
-        if (username != null)
+        if (userId != null)
         {
-            var user = _ctx.Users.FirstOrDefault(user => user.UserName == username);
+            var user = _ctx.Users.FirstOrDefault(user => user.Id == userId);
             if (user != null)
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
-                ViewData["UserRoles"] = userRoles;
+                
             }
 
             return View(user);
