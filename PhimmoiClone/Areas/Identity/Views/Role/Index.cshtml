@@ -13,7 +13,7 @@
         @foreach (var role in Model)
         {
             <li>
-                <a asp-action="RoleDetail" asp-route-roleName="@role.Name">@role.Name</a>
+                <a asp-action="RoleDetail" asp-route-roleId="@role.Id">@role.Name</a>
             </li>
         }
     </ul>

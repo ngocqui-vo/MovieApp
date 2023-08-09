@@ -22,6 +22,8 @@ namespace PhimmoiClone
                 options.UseSqlServer(connectionString);
             });
 
+            builder.Services.AddTransient<MyDbContext>();
+
             builder.Services.AddIdentity<IdentityUser, IdentityRole>()
                             .AddEntityFrameworkStores<MyDbContext>()
                             .AddDefaultTokenProviders();

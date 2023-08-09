@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -34,9 +33,9 @@ public class RoleController : Controller
     }
 
    
-    public async Task<IActionResult> RoleDetail(string? roleName)
+    public async Task<IActionResult> RoleDetail(string? roleId)
     {
-        var role = await _ctx.Roles.FirstOrDefaultAsync(r => r.Name == roleName);
+        var role = await _ctx.Roles.FirstOrDefaultAsync(r => r.Id == roleId);
         if (role == null)
         {
             StatusMessage = "Không tìm thấy role";
@@ -76,59 +75,6 @@ public class RoleController : Controller
         return RedirectToAction("AddRole");
     }
 
-
-    //public async Task<IActionResult> EditRole(string? roleName)
-    //{
-    //    var role = await _ctx.Roles
-    //                                .FirstOrDefaultAsync(r => r.Name == roleName);
-    //    if (role == null)
-    //    {
-    //        StatusMessage = "Error: role không tồn tại";
-    //        return RedirectToAction("Index");
-    //    }
-
-    //}
-    
-    public async Task<IActionResult> AddClaim(string roleName)
-    {
-        var role = await _ctx.Roles.FirstOrDefaultAsync(r => r.Name == roleName);
-        ViewData["Role"] = role;
-        return View(new AddClaimViewModel());
-    }
-    [HttpPost]
-    public async Task<IActionResult> AddClaim(AddClaimViewModel addClaimModel)
-    {
-        if (ModelState.IsValid)
-        {
-            var newClaim = new IdentityRoleClaim<string?>()
-            {
-                RoleId = addClaimModel.RoleId,
-                ClaimType = addClaimModel.Type,
-                ClaimValue = addClaimModel.Value
-            };
-            await _ctx.RoleClaims.AddAsync(newClaim);
-            await _ctx.SaveChangesAsync();
-            StatusMessage = "thêm thành công claim";
-            
-        }
-        else
-        {
-            StatusMessage = "Error: thêm claim thất bại";
-        }
-        var role = await _ctx.Roles.FirstOrDefaultAsync(r => r.Id == addClaimModel.RoleId);
-        return RedirectToAction("AddClaim", new {roleName = role?.Name});
-       
-    }
-
-    // public IActionResult AddClaim(AddClaimViewModel newClaim)
-    // {
-    //     var c = new IdentityRoleClaim<string>()
-    //     {
-    //         RoleId = 
-    //     };
-    //     
-    //     c.
-    // }
     public IActionResult GetAllUser()
     {
         var users = _ctx.Users.ToList();

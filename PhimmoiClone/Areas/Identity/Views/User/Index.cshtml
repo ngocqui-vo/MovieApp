@@ -10,6 +10,6 @@
     
     @foreach (var user in Model)
     {
-        <li><a href="">@user.UserName</a></li>
+        <li><a asp-action="UserDetail" asp-route-userId="@user.Id">@user.UserName</a></li>
     }
 </ul>

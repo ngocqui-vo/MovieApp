@@ -9,7 +9,7 @@
 <h1>Thông tin role: @Model.Name</h1>
 
 <a asp-action="" class="btn btn-danger">Xóa role</a>
-<a asp-action="AddClaim" asp-route-roleName="@Model.Name" class="btn btn-success">Thêm claim</a>
+<a asp-controller="Claim" asp-action="AddRoleClaim" asp-route-roleId="@Model.Id" class="btn btn-success">Thêm claim</a>
 
 <h2>Tất cả claims: </h2>
 @if (claims != null)
@@ -21,3 +21,5 @@
         }
     </ul>
 }
+
+<h2>Tất cả user thuộc role: @Model.Name</h2>
