@@ -1,0 +1,15 @@
+﻿@model Microsoft.AspNetCore.Identity.IdentityRole
+
+@{
+    
+}
+<partial name="_StatusMessage"/>
+
+<form method="POST" asp-area="Identity" asp-controller="Role" asp-action="EditRole">
+    
+    <div class="form-outline mb-4">
+        <label class="form-label" for="name">Name</label>
+        <input asp-for="Name" class="form-control" id="name">
+    </div>
+    <button type="submit" class="btn btn-primary btn-block mb-4">Sửa Role</button>
+</form>

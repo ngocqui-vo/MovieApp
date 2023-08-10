@@ -14,6 +14,8 @@
         {
             <li>
                 <a asp-action="RoleDetail" asp-route-roleId="@role.Id">@role.Name</a>
+                - 
+                <a asp-action="DeleteRoleConfirm" asp-route-roleId="@role.Id" class="btn btn-danger">Xóa</a>
             </li>
         }
     </ul>

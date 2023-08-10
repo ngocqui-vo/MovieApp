@@ -9,7 +9,7 @@
     @foreach (var user in Model)
     {
         <li>
-            <a asp-action="GetUser" asp-route-username="@user.UserName">@user.UserName</a>
+            @user.UserName
         </li>
     }
 </ul>

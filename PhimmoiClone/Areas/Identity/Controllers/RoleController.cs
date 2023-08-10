@@ -54,34 +54,111 @@ public class RoleController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddRole(AddRoleViewModel newRole)
+    public async Task<IActionResult> CreateRole(AddRoleViewModel newRole)
     {
-        var roleExist = await _ctx.Roles
-                                .FirstOrDefaultAsync(r => r.Name == newRole.Name);
-        if (roleExist != null)
+        if (ModelState.IsValid)
         {
-            StatusMessage = "Error: role đã tồn tại";
-            return RedirectToAction("AddRole");
+            
+            if (await _roleManager.RoleExistsAsync(newRole.Name))
+            {
+                StatusMessage = "Error: role đã tồn tại";
+                return RedirectToAction("AddRole");
+            }
+
+            var identityRole = new IdentityRole()
+            {
+                Name = newRole.Name,
+                NormalizedName = newRole.NormalizeName
+            };
+            
+            var result = await _roleManager.CreateAsync(identityRole);
+            if (result.Succeeded)
+            {
+                StatusMessage = $"Tạo thành công role: {newRole.Name}";
+            }
+            
+        }
+        else
+        {
+            StatusMessage = "Thêm role thất bại";
+        }
+        return RedirectToAction("AddRole");
+    }
+
+    public async Task<IActionResult> EditRole(string roleId)
+    {
+        var role = await _roleManager.Roles.FirstOrDefaultAsync(r => r.Id == roleId);
+        return View(role);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> EditRole(IdentityRole editRole)
+    {
+        if (ModelState.IsValid)
+        {
+            
+            if (await _roleManager.RoleExistsAsync(editRole.Name))
+            {
+                StatusMessage = "Error: role name đã tồn tại";
+                return RedirectToAction("EditRole", new {roleId = editRole.Id});
+            }
+
+            
+            
+            var result = await _roleManager.UpdateAsync(editRole);
+            if (result.Succeeded)
+            {
+                StatusMessage = $"Sửa role thành công";
+            }
+            
+        }
+        else
+        {
+            StatusMessage = "Sửa role thất bại";
+        }
+        return RedirectToAction("Index");
+    }
+
+    public async Task<IActionResult> DeleteRoleConfirm(string roleId)
+    {
+        var role = await _roleManager.Roles.FirstOrDefaultAsync(r => r.Id == roleId);
+        if (role != null)
+            return View(role);
+        StatusMessage = "Không tìm thấy role";
+        return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteRole(string roleId)
+    {
+        var role = await _roleManager.Roles.FirstOrDefaultAsync(r => r.Id == roleId);
+
+        if (role != null)
+        {
+            var result = await _roleManager.DeleteAsync(role);
+            StatusMessage = result.Succeeded ? "Xóa role thành công" : "Xóa role thất bại";
+        }
+        else
+        {
+            StatusMessage = "Không tìm thấy role";
         }
 
-        var identityRole = new IdentityRole()
-        {
-            Name = newRole.Name,
-            NormalizedName = newRole.NormalizeName
-        };
-        await _ctx.Roles.AddAsync(identityRole);
-        await _ctx.SaveChangesAsync();
-        StatusMessage = "Thêm role thành công";
-        return RedirectToAction("AddRole");
+        return RedirectToAction("Index");
     }
 
     public async Task<IActionResult> GetAllUser(string roleId)
     {
 
-        var userRoles = await _ctx.UserRoles
-            .Where(ur => ur.RoleId == roleId)
-            .ToListAsync();
-        
+        var users = new List<IdentityUser>();
+        var role = await _roleManager.Roles.FirstOrDefaultAsync(r => r.Id == roleId);
+        if (role != null)
+        {
+            foreach (var user in _ctx.Users)
+            {
+                if (await _userManager.IsInRoleAsync(user, role.Name))
+                    users.Add(user);
+            }
+        }
         
         return View(users);
     }

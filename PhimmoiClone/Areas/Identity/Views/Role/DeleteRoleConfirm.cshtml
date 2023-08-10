@@ -1,0 +1,11 @@
+﻿@model Microsoft.AspNetCore.Identity.IdentityRole
+
+@{
+    ViewBag.Title = "Xóa role";
+}
+
+<h2>Bạn có chắc muốn xóa role @Model.Name</h2>
+<form asp-action="DeleteRole" method="POST">
+    <input type="hidden" value="@Model.Id" name="roleId">
+    <button class="btn btn-danger" type="submit">Xác nhận</button>
+</form>
