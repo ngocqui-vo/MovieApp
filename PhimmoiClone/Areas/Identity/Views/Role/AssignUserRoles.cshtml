@@ -1,0 +1,38 @@
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Cryptography
+@using Org.BouncyCastle.Crypto.Engines
+@model IdentityUser
+
+@{
+    ViewBag.Title = "Thông tin user";
+    
+    var userRoles = ViewData["UserRoles"] as List<string>;
+    var allRoles = ViewData["AllRoles"] as List<string>;
+}
+<partial name="_StatusMessage"/>
+
+<h1>Gán role cho user: @Model?.UserName</h1>
+
+
+<form asp-action="AssignUserRoles" method="POST">
+    <input type="hidden" name="userId" value="@Model?.Id">
+    
+    @if (allRoles != null)
+    {
+        <h3 for="">Chọn roles:</h3>
+        foreach (var role in allRoles)
+        {
+            <div>
+                <input type="checkbox" name="selectedRoles" value="@role"
+                                   @(userRoles != null && userRoles.Contains(role) ? "checked" : "")/>
+                            <label>@role</label>   
+            </div>                                                                     
+                                                                                    
+        }
+        <button type="submit" class="btn btn-primary">Lưu</button>
+    }
+    else
+    {
+        <h2 class="text-danger">Hiện chưa có role nào</h2>
+    }
+</form>

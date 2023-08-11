@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PhimmoiClone.Areas.Identity.Models;
 using PhimmoiClone.Data;
@@ -163,15 +164,19 @@ public class RoleController : Controller
         return View(users);
     }
 
-    public async Task<IActionResult> EditUserRoles(string? userId)
+    public async Task<IActionResult> AssignUserRoles(string? userId)
     {
         if (userId != null)
         {
             var user = _ctx.Users.FirstOrDefault(user => user.Id == userId);
+            
             if (user != null)
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
-                
+                var allRoles = _roleManager.Roles.Select(r => r.Name).ToList();
+
+                ViewData["AllRoles"] = allRoles;
+                ViewData["UserRoles"] = userRoles;
             }
 
             return View(user);
@@ -179,7 +184,25 @@ public class RoleController : Controller
 
         return NotFound();
     }
-    
-    
-    
+
+    [HttpPost]
+    public async Task<IActionResult> AssignUserRoles(string? userId, List<string>? selectedRoles)
+    {
+        var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        if (user != null)
+        {
+            // remove all old roles
+            var currentRoles = await _userManager.GetRolesAsync(user);
+            await _userManager.RemoveFromRolesAsync(user, currentRoles);
+            
+            // add new roles
+            var result = await _userManager.AddToRolesAsync(user, selectedRoles);
+            StatusMessage = result.Succeeded ? "Cập nhật roles thành công" : "Không thể cập nhật user roles";
+            return RedirectToAction("AssignUserRoles", new { userId = userId });
+        }
+
+        StatusMessage = "Không thể cập nhật user roles";
+        return RedirectToAction("AssignUserRoles", new { userId = userId });
+    }
+
 }
