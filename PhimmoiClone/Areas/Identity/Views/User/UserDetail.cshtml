@@ -6,6 +6,7 @@
     ViewBag.Title = "Thông tin user";
     var userRoles = ViewData["UserRoles"] as List<string>;
     var userClaims = ViewData["UserClaims"] as List<Claim>;
+    var roleClaims = ViewData["RoleClaims"] as List<Claim>;
 }
 
 <h1>Thông tin user: @Model?.UserName</h1>
@@ -27,6 +28,23 @@ else
     <p class="text-danger">Chưa có role nào</p>
 }
 
+<h3>Roles claims: </h3>
+
+@if (roleClaims is {Count: > 0 })
+{   <ul>
+        @foreach (var claim in roleClaims)
+        {
+            <li>
+                @claim.Type - @claim.Value
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p class="text-danger">Chưa có claims nào</p>
+}
+
 <h3>User claims: </h3>
 
 @if (userClaims is {Count: > 0 })
@@ -34,7 +52,7 @@ else
         @foreach (var claim in userClaims)
         {
             <li>
-                @claim
+                @claim.Type - @claim.Value - <a asp-controller="Claim" asp-action="">Xóa</a>
             </li>
         }
     </ul>
@@ -45,3 +63,4 @@ else
 }
 
 <a asp-controller="Claim" asp-action="AddUserClaim" asp-route-userId="@Model?.Id" class="btn btn-success">Thêm claim</a>
+

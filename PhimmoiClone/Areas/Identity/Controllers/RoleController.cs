@@ -36,6 +36,7 @@ public class RoleController : Controller
    
     public async Task<IActionResult> RoleDetail(string? roleId)
     {
+        var users = new List<IdentityUser>();
         var role = await _ctx.Roles.FirstOrDefaultAsync(r => r.Id == roleId);
         if (role == null)
         {
@@ -45,6 +46,15 @@ public class RoleController : Controller
 
         var claims = await _roleManager.GetClaimsAsync(role);
         ViewData["Claims"] = claims;
+        
+        foreach (var user in _ctx.Users)
+        {
+            if (await _userManager.IsInRoleAsync(user, role.Name))
+                users.Add(user);
+        }
+
+        ViewData["Users"] = users;
+        
         return View(role);
     }
     
@@ -147,22 +157,7 @@ public class RoleController : Controller
         return RedirectToAction("Index");
     }
 
-    public async Task<IActionResult> GetAllUser(string roleId)
-    {
-
-        var users = new List<IdentityUser>();
-        var role = await _roleManager.Roles.FirstOrDefaultAsync(r => r.Id == roleId);
-        if (role != null)
-        {
-            foreach (var user in _ctx.Users)
-            {
-                if (await _userManager.IsInRoleAsync(user, role.Name))
-                    users.Add(user);
-            }
-        }
-        
-        return View(users);
-    }
+    
 
     public async Task<IActionResult> AssignUserRoles(string? userId)
     {

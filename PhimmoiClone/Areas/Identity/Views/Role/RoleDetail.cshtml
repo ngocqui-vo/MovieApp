@@ -1,9 +1,11 @@
 @using System.Security.Claims
+@using Microsoft.AspNetCore.Identity
 @model Microsoft.AspNetCore.Identity.IdentityRole
 
 @{
     ViewBag.Title = "Role Details";
     var claims = ViewData["Claims"] as List<Claim>;
+    var users = ViewData["Users"] as List<IdentityUser>;
 }
 
 <h1>Thông tin role: @Model.Name</h1>
@@ -11,7 +13,7 @@
 <a asp-action="" class="btn btn-danger">Xóa role</a>
 <a asp-controller="Claim" asp-action="AddRoleClaim" asp-route-roleId="@Model.Id" class="btn btn-success">Thêm claim</a>
 
-<h2>Tất cả claims: </h2>
+<h2>Tất cả claims của role: @Model.Name: </h2>
 @if (claims != null)
 {
     <ul>
@@ -23,3 +25,12 @@
 }
 
 <h2>Tất cả user thuộc role: @Model.Name</h2>
+@if (users != null)
+{
+    <ul>
+        @foreach (var user in users)
+        {
+            <li><a asp-controller="User" asp-action="UserDetail" asp-route-userId="@user.Id">@user.UserName</a></li>
+        }
+    </ul>
+}
