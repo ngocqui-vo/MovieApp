@@ -1,0 +1,30 @@
+﻿@model PhimmoiClone.Areas.Cinema.ViewModel.ActorViewModel
+
+@{
+    ViewBag.Title = "Thêm diễn viên";
+    
+}
+
+<h2>Thêm diễn viên</h2>
+
+<form asp-action="CreateActor" method="POST">
+
+    <div class="mb-3">
+        <label for="Name" class="form-label">Tên</label>
+        <input class="form-control" id="Name" asp-for="Name">
+    </div>
+    
+    <div class="mb-3">
+        <label for="Description" class="form-label">Mô tả</label>
+        <input class="form-control" id="Description" asp-for="Description">
+    </div>
+    
+    <div class="mb-3">
+        <label for="DoB" class="form-label">Ngày sinh</label>
+        <input class="form-control" id="DoB" asp-for="DoB">
+    </div>
+    
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+

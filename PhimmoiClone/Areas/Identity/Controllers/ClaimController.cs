@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PhimmoiClone.Areas.Identity.Models;
@@ -12,6 +13,7 @@ public class ClaimController : Controller
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
     private readonly MyDbContext _ctx;
     private readonly ILogger<UserController> _logger;
     
@@ -19,11 +21,13 @@ public class ClaimController : Controller
         MyDbContext ctx,
         UserManager<IdentityUser> userManager,
         SignInManager<IdentityUser> signInManager,
+        RoleManager<IdentityRole> roleManager,
         ILogger<UserController> logger)
     {
         _ctx = ctx;
         _userManager = userManager;
         _signInManager = signInManager;
+        _roleManager = roleManager;
         _logger = logger;
     }
     [TempData] 
@@ -59,6 +63,20 @@ public class ClaimController : Controller
         return RedirectToAction("AddUserClaim", new {userId = user?.Id});
        
     }
+    [HttpPost]
+    public async Task<IActionResult> DeleteUserClaim(int claimId, string userId)
+    {
+        var userClaim = await _ctx.UserClaims.FirstOrDefaultAsync(c => c.Id == claimId);
+        if (userClaim != null)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            
+           await _userManager
+                .RemoveClaimAsync(user, new Claim(userClaim.ClaimType, userClaim.ClaimValue));
+           StatusMessage = "vừa xóa claim";
+        }
+        return RedirectToAction("UserDetail", "User", new { userId = userId });
+    } 
     public async Task<IActionResult> AddRoleClaim(string roleId)
     {
         var role = await _ctx.Roles.FirstOrDefaultAsync(r => r.Id == roleId);
@@ -89,4 +107,19 @@ public class ClaimController : Controller
         return RedirectToAction("AddRoleClaim", new {roleId = role?.Id});
        
     }
+    
+    [HttpPost]
+    public async Task<IActionResult> DeleteRoleClaim(int claimId, string roleId)
+    {
+        var roleClaim = await _ctx.RoleClaims.FirstOrDefaultAsync(c => c.Id == claimId);
+        if (roleClaim != null)
+        {
+            var role = await _ctx.Roles.FirstOrDefaultAsync(r => r.Id == roleId);
+            
+            await _roleManager
+                .RemoveClaimAsync(role, new Claim(roleClaim.ClaimType, roleClaim.ClaimValue));
+            StatusMessage = "vừa xóa claim";
+        }
+        return RedirectToAction("RoleDetail", "Role", new { roleId = roleId });
+    } 
 }

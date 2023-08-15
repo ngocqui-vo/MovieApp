@@ -1,0 +1,50 @@
+﻿@using PhimmoiClone.Areas.Cinema.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model PhimmoiClone.Areas.Cinema.Models.Actor?
+
+@{
+    ViewBag.Title = "title";
+    var movies = ViewData["Movies"] as List<Movie>;
+}
+<partial name="_StatusMessage"/>
+<h2>Thông tin diễn viên</h2>
+
+<div class="row">
+    <div class="col-sm-4">
+        <img src="" alt="">
+        img here
+    </div>
+    <div class="col-sm-8">
+        <h2>Tên: @Model?.Name</h2>
+        <h2>Ngày sinh: @Model?.DoB.ToShortDateString()</h2>
+        <p>Tiểu sử: @Model?.Description</p>
+    </div>
+</div>
+
+<hr>
+
+<h3>Tất cả phim đã đóng</h3>
+@if (movies?.Count > 0)
+{
+    <div class="row">
+       @foreach (var movie in movies)
+       {
+           <div class="col-sm-4">
+               <a href="">
+                   <div class="card" style="width: 18rem;">
+                       <img class="card-img-top" src="" alt="Card image cap">
+                       <div class="card-body">
+                           <h5 class="card-title">@movie.Name</h5>
+                       </div>
+                   </div>
+                   
+               </a>
+           </div> 
+           
+       }
+    </div>
+}
+else
+{
+    <p class="text-danger">hiện chưa có phim nào</p>
+}

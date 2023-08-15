@@ -1,0 +1,14 @@
+﻿@model PhimmoiClone.Areas.Cinema.Models.Actor
+
+@{
+    ViewBag.Title = "Xóa diễn viên";
+    Layout = "_Layout";
+}
+
+<h2>Bạn có chắc chắn muốn xóa diễn viên: @Model.Name</h2>
+
+<form asp-action="DeleteActor" asp-route-id="@Model.Id">
+    <button class="btn btn-danger" type="submit">Xóa</button>
+</form>
+ 
+ 

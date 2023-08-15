@@ -5,9 +5,11 @@
 @{
     ViewBag.Title = "Thông tin user";
     var userRoles = ViewData["UserRoles"] as List<string>;
-    var userClaims = ViewData["UserClaims"] as List<Claim>;
+    var userClaims = ViewData["UserClaims"] as List<IdentityUserClaim<string>>;
     var roleClaims = ViewData["RoleClaims"] as List<Claim>;
 }
+
+<partial name="_StatusMessage"/>
 
 <h1>Thông tin user: @Model?.UserName</h1>
 
@@ -52,7 +54,12 @@ else
         @foreach (var claim in userClaims)
         {
             <li>
-                @claim.Type - @claim.Value - <a asp-controller="Claim" asp-action="">Xóa</a>
+                @claim.ClaimType - @claim.ClaimValue - 
+                <form asp-controller="Claim" asp-action="DeleteUserClaim" method="POST">
+                    <input type="hidden" name="claimId" value="@claim.Id">
+                    <input type="hidden" name="userId" value="@Model?.Id">
+                    <button class="btn btn-danger" type="submit">Xóa</button>
+                </form>
             </li>
         }
     </ul>

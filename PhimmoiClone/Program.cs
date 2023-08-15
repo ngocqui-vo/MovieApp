@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using PhimmoiClone.Areas.Cinema.Repository.ActorRepo;
 using PhimmoiClone.Data;
 using PhimmoiClone.Mail;
 
@@ -66,6 +67,7 @@ namespace PhimmoiClone
             var mailSettings = builder.Configuration.GetSection("MailSettings");
             builder.Services.Configure<MailSettings>(mailSettings);
             builder.Services.AddTransient<IEmailSender, SendMailService>();
+            builder.Services.AddScoped<IActorRepo, ActorRepo>();
 
             var app = builder.Build();
 

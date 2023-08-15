@@ -44,7 +44,7 @@ public class UserController : Controller
         if (user == null)
             return NotFound();
         
-        var userClaims = await _userManager.GetClaimsAsync(user);
+        var userClaims = await _ctx.UserClaims.Where(c => c.UserId == user.Id).ToListAsync();
         var userRoles = await _userManager.GetRolesAsync(user);
         ViewData["UserClaims"] = userClaims;
         ViewData["UserRoles"] = userRoles;
