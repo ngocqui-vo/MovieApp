@@ -28,7 +28,7 @@ public class ActorController : Controller
     [HttpGet("get-all-actors")]
     public async Task<IActionResult> Index()
     {
-        var actors = await _repo.GetAllActorAsync();
+        var actors = await _repo.GetAllAsync();
         return View(actors);
     }
 
@@ -37,7 +37,7 @@ public class ActorController : Controller
     {
         if (id == null)
             return NotFound();
-        var actor = await _repo.GetActorByIdAsync((int)id);
+        var actor = await _repo.GetByIdAsync((int)id);
         
         var movies = actor?.MovieActors?.Select(ma => ma.Movie).ToList();
         ViewData["Movies"] = movies;
@@ -53,7 +53,7 @@ public class ActorController : Controller
     [HttpPost("create-actor")]
     public async Task<IActionResult> CreateActor(ActorViewModel actorViewModel)
     {
-        await _repo.CreateActorAsync(actorViewModel);
+        await _repo.CreateAsync(actorViewModel);
         if (await _repo.SaveAsync())
         {
             StatusMessage = "thêm thành công";
@@ -71,14 +71,14 @@ public class ActorController : Controller
     {
         if (id == null)
             return NotFound();
-        var actor = await _repo.GetActorByIdAsync((int)id);
+        var actor = await _repo.GetByIdAsync((int)id);
         return View(actor);
     }
 
     [HttpPost]
     public async Task<IActionResult> DeleteActor(int id)
     {
-        await _repo.DeleteActorAsync(id);
+        await _repo.DeleteAsync(id);
         if (await _repo.SaveAsync())
         {
             StatusMessage = "Xóa thành công";
@@ -92,17 +92,17 @@ public class ActorController : Controller
     [HttpGet("update-actor-{id}")]
     public async Task<IActionResult> UpdateActor(int id)
     {
-        var actor = await _repo.GetActorByIdAsync(id);
+        var actor = await _repo.GetByIdAsync(id);
         return View(actor);
     }
 
     [HttpPost("update-actor-{id}")]
     public async Task<IActionResult> UpdateActor(int id, ActorViewModel actorViewModel)
     {
-        var actor = await _repo.GetActorByIdAsync(id);
+        var actor = await _repo.GetByIdAsync(id);
         if (actor == null)
             return NotFound();
-        await _repo.UpdateActorAsync(id, actorViewModel);
+        await _repo.UpdateAsync(id, actorViewModel);
         if (await _repo.SaveAsync())
         {
             StatusMessage = "cập nhật thành công";

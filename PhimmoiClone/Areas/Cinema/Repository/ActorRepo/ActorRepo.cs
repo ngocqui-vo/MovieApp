@@ -16,13 +16,13 @@ public class ActorRepo : IActorRepo
         _ctx = ctx;
     }
 
-    public async Task<List<Actor>> GetAllActorAsync()
+    public async Task<List<Actor>> GetAllAsync()
     {
         var actors = await _ctx.Actors.ToListAsync();
         return actors;
     }
 
-    public async Task<Actor?> GetActorByIdAsync(int id)
+    public async Task<Actor?> GetByIdAsync(int id)
     {
         var actor = await _ctx.Actors
             .Include(a => a.MovieActors)!
@@ -31,7 +31,7 @@ public class ActorRepo : IActorRepo
         return actor;
     }
 
-    public async Task CreateActorAsync(ActorViewModel actorViewModel)
+    public async Task CreateAsync(ActorViewModel actorViewModel)
     {
         var actor = new Actor()
         {
@@ -43,9 +43,9 @@ public class ActorRepo : IActorRepo
     }
 
     
-    public async Task UpdateActorAsync(int id, ActorViewModel actorViewModel)
+    public async Task UpdateAsync(int id, ActorViewModel actorViewModel)
     {
-        var actor = await GetActorByIdAsync(id);
+        var actor = await GetByIdAsync(id);
         if (actor != null)
         {
             actor.Name = actorViewModel.Name;
@@ -57,9 +57,9 @@ public class ActorRepo : IActorRepo
 
    
 
-    public async Task DeleteActorAsync(int id)
+    public async Task DeleteAsync(int id)
     {
-        var actor = await GetActorByIdAsync(id);
+        var actor = await GetByIdAsync(id);
         if (actor != null) _ctx.Actors.Remove(actor);
     }
 
