@@ -1,0 +1,12 @@
+﻿@model PhimmoiClone.Areas.Cinema.Models.Genre?
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>Bạn có chắc chắn muốn xóa thể loại: @Model?.Title</h2>
+
+<form asp-action="Delete" asp-route-id="@Model?.Id" method="POST">
+    <button class="btn btn-danger" type="submit">Xóa</button>
+</form>
+ 

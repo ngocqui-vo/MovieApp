@@ -1,8 +1,37 @@
-﻿@model dynamic
+﻿@model List<PhimmoiClone.Areas.Cinema.Models.Genre>
 
 @{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+    ViewBag.Title = "Tất cả thể loại";
 }
 
-<h2>title</h2>
+<partial name="_StatusMessage"/>
+
+<a asp-action="Create" class="btn btn-success">Thêm thể loại</a>
+<h2>Danh sách diễn viên</h2>
+
+@if (Model is {Count: > 0})
+{
+    <ul>
+        @foreach (var genre in Model)
+        {
+            <a asp-action="Detail" asp-route-id="@genre.Id" style="text-decoration-line: none">
+                <div class="card" style="width: 18rem;">
+                
+                    <img src="" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            
+                            @genre.Title
+                        </h5>   
+                    </div>
+                </div>
+            </a>
+            
+        }
+    </ul>
+}
+else 
+{
+    <h2 class="">Hiện chưa có thể loại nào</h2>
+}
+

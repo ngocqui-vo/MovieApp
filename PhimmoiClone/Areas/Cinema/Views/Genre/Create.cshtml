@@ -1,0 +1,23 @@
+﻿@model PhimmoiClone.Areas.Cinema.ViewModel.GenreViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Thêm thể loại</h2>
+
+<form asp-action="Create" method="POST">
+
+    <div class="mb-3">
+        <label for="Name" class="form-label">Tiêu đề</label>
+        <input class="form-control" id="Name" asp-for="Title">
+    </div>
+    
+    <div class="mb-3">
+        <label for="Description" class="form-label">Mô tả</label>
+        <input class="form-control" id="Description" asp-for="Description">
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Thêm</button>
+</form>

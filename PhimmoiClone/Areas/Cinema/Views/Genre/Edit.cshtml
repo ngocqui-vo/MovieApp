@@ -1,0 +1,25 @@
+﻿@model PhimmoiClone.Areas.Cinema.Models.Genre?
+
+@{
+    ViewBag.Title = "Chỉnh sửa thể loại";
+}
+
+
+<h2>Chỉnh sửa thể loại: @Model?.Title</h2>
+
+<form asp-action="Edit" method="POST">
+    <input type="hidden" name="id" value="@Model?.Id">
+    
+
+    <div class="mb-3">
+        <label for="Name" class="form-label">Tiêu đề</label>
+        <input class="form-control" id="Name" asp-for="Title">
+    </div>
+
+    <div class="mb-3">
+        <label for="Description" class="form-label">Mô tả</label>
+        <input class="form-control" id="Description" asp-for="Description">
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Chỉnh sửa</button>
+</form>

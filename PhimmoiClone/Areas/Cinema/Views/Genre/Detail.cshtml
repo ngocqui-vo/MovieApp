@@ -1,8 +1,52 @@
-﻿@model PhimmoiClone.Areas.Cinema.Models.Genre?
+﻿@using PhimmoiClone.Areas.Cinema.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model PhimmoiClone.Areas.Cinema.Models.Genre?
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+@{
+    ViewBag.Title = "title";
+    var movies = ViewData["Movies"] as List<Movie>;
+}
+<partial name="_StatusMessage"/>
+<h2>Thông tin thể loại</h2>
+
+<div class="row">
+    
+    <div class="col-sm-12">
+        <h2>Tên: @Model?.Title</h2>
+        <p>Mô tả: @Model?.Description</p>
+    </div>
+</div>
+<a asp-action="DeleteConfirm" asp-route-id="@Model?.Id" class="btn btn-danger">Xóa thể loại</a>
+<a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-success">Sửa thông tin thể loại</a>
+<hr>
+
+<h3>Tất cả phim của thể loại: @Model?.Title</h3>
+@if (movies?.Count > 0)
+{
+    <div class="row">
+       @foreach (var movie in movies)
+       {
+           <div class="col-sm-4">
+               <a href="">
+                   <div class="card" style="width: 18rem;">
+                       <img class="card-img-top" src="" alt="Card image cap">
+                       <div class="card-body">
+                           <h5 class="card-title">@movie.Name</h5>
+                       </div>
+                   </div>
+                   
+               </a>
+           </div> 
+           
+       }
+    </div>
+}
+else
+{
+    <p class="text-danger">hiện chưa có phim nào</p>
+}
