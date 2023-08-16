@@ -96,7 +96,7 @@ public class ActorController : Controller
         return View(actor);
     }
 
-    [HttpPost]
+    [HttpPost("update-actor-{id}")]
     public async Task<IActionResult> UpdateActor(int id, ActorViewModel actorViewModel)
     {
         var actor = await _repo.GetActorByIdAsync(id);

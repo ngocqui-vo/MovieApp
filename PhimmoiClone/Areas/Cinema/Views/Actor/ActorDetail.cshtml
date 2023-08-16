@@ -20,7 +20,8 @@
         <p>Tiểu sử: @Model?.Description</p>
     </div>
 </div>
-
+<a asp-action="DeleteActorCornFirm" asp-route-id="@Model?.Id" class="btn btn-danger">Xóa diễn viên</a>
+<a asp-action="UpdateActor" asp-route-id="@Model?.Id" class="btn btn-success">Sửa thông tin diễn viên</a>
 <hr>
 
 <h3>Tất cả phim đã đóng</h3>
