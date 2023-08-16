@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PhimmoiClone.Data;
@@ -9,10 +10,17 @@ namespace PhimmoiClone.Areas.Database.Controllers;
 public class DatabaseController : Controller
 {
     private readonly MyDbContext _ctx;
+    private readonly UserManager<IdentityUser> _userManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
 
-    public DatabaseController(MyDbContext ctx)
+    public DatabaseController(
+        MyDbContext ctx, 
+        UserManager<IdentityUser> userManager,
+        RoleManager<IdentityRole> roleManager)
     {
         _ctx = ctx;
+        _userManager = userManager;
+        _roleManager = roleManager;
         StatusMessage = "";
     }
     [TempData] 
@@ -57,6 +65,45 @@ public class DatabaseController : Controller
         }
 
         StatusMessage = "Xóa thành công";
+        return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> SeedAdminUserAndAdminRole()
+    {
+        if (await _roleManager.FindByNameAsync("admin") == null)
+        {
+            var adminRole = new IdentityRole()
+            {
+                Name = "admin"
+            };
+            var result = await _roleManager.CreateAsync(adminRole);
+        }
+        else
+        {
+            StatusMessage = "đã tồn tại admin role";
+        }
+        if (await _userManager.FindByEmailAsync("admin@gmail.com") == null)
+        {
+            var adminUser = new IdentityUser()
+            {
+                UserName = "admin",
+                Email = "admin@gmail.com"
+            };
+            var result = await _userManager.CreateAsync(adminUser, "123");
+            StatusMessage = result.Succeeded ? "seed thành công admin user" : "seed user thất bại";
+            await _userManager.AddToRoleAsync(adminUser, "admin");
+
+            return RedirectToAction("Index");
+        }
+        else
+        {
+            StatusMessage = string.IsNullOrEmpty(StatusMessage) 
+                ? StatusMessage + ", đã tồn tại admin user" 
+                : "đã tồn tại admin user";
+        }
+
+        
         return RedirectToAction("Index");
     }
 
