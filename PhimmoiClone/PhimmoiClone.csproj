@@ -31,9 +31,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Cinema\Views\Movie\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Cinema\Views\Movie\DeleteConfirm.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Role\GetUser.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Role\Index.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Identity\Views\Claim\AddClaim.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Cinema\Views\Movie\DeleteConfirm.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Cinema\Views\Movie\Create.cshtml" />
   </ItemGroup>
 
 </Project>

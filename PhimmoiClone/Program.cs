@@ -41,7 +41,7 @@ namespace PhimmoiClone
 
                 // Cấu hình Lockout - khóa user
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); // Khóa 5 phút
-                options.Lockout.MaxFailedAccessAttempts = 5; // Thất bại 5 lầ thì khóa
+                options.Lockout.MaxFailedAccessAttempts = 5; // Thất bại 5 lần thì khóa
                 options.Lockout.AllowedForNewUsers = true;
 
                 // Cấu hình về User.
@@ -77,6 +77,10 @@ namespace PhimmoiClone
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+            }
+            else
+            {
+                
             }
 
             app.UseHttpsRedirection();

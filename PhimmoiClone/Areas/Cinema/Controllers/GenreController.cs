@@ -5,7 +5,7 @@ using PhimmoiClone.Data;
 
 namespace PhimmoiClone.Areas.Cinema.Controllers;
 [Area("Cinema")]
-[Route("Genre")]
+[Route("Genre/[action]")]
 public class GenreController : Controller
 {
     private readonly MyDbContext _ctx;
