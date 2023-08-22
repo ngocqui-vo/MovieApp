@@ -68,7 +68,6 @@ public class DatabaseController : Controller
         return RedirectToAction("Index");
     }
 
-    [HttpPost]
     public async Task<IActionResult> SeedAdminUserAndAdminRole()
     {
         if (await _roleManager.FindByNameAsync("admin") == null)

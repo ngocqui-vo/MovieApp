@@ -1,8 +1,13 @@
-﻿@model PhimmoiClone.Areas.Cinema.Models.Movie?
+﻿@model PhimmoiClone.Areas.Cinema.Models.Movie
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Xóa phim";
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+<h2>Bạn có chắc chắn muốn xóa phim: @Model.Name</h2>
+
+<form asp-action="Delete" asp-route-id="@Model.Id" method="POST">
+    <button class="btn btn-danger" type="submit">Xóa</button>
+</form>
+

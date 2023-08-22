@@ -7,7 +7,7 @@
 
 <partial name="_StatusMessage"/>
 
-<a asp-action="CreateActor" class="btn btn-success">Thêm diễn viên</a>
+<a asp-action="Create" class="btn btn-success">Thêm diễn viên</a>
 <h2>Danh sách diễn viên</h2>
 
 @if (Model is {Count: > 0})
@@ -15,7 +15,7 @@
     <ul>
         @foreach (var actor in Model)
         {
-            <a asp-action="ActorDetail" asp-route-id="@actor.Id" style="text-decoration-line: none">
+            <a asp-action="Detail" asp-route-id="@actor.Id" style="text-decoration-line: none">
                 <div class="card" style="width: 18rem;">
                 
                     <img src="" class="card-img-top" alt="">

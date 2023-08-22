@@ -41,10 +41,11 @@
     </ul>
     
     <a class="btn btn-danger" asp-action="DeleteDatabase">Xóa database</a>
+    <a class="btn btn-success" asp-action="SeedAdminUserAndAdminRole">Seed user và role admin</a>
 }
 else
 {
     <h1>Chưa có database!!!</h1>
     <a class="btn btn-danger" asp-action="CreateDatabase">Tạo database</a>
-    <a class="btn btn-success" asp-action="SeedAdminUserAndAdminRole">Seed user và role admin</a>
+    
 }

@@ -42,6 +42,16 @@ public class MovieController : Controller
     public async Task<IActionResult> Detail(int id)
     {
         var movie = await _repo.GetByIdAsync(id);
+        if (movie == null)
+            return NotFound();
+
+        var actors = movie.MovieActors?.Select(m => m.Actor).ToList();
+
+        var genres = movie.MovieGenres?.Select(m => m.Genre).ToList();
+
+        ViewData["Actors"] = actors;
+        ViewData["Genres"] = genres;
+
         return View(movie);
     }
 
@@ -61,7 +71,7 @@ public class MovieController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Create()
+    public IActionResult Create()
     {
         return View(new MovieViewModel());
     }
@@ -83,4 +93,77 @@ public class MovieController : Controller
         var movie = await _repo.GetByIdAsync(id);
         return View(movie);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(int id, MovieViewModel vm)
+    {
+        await _repo.UpdateAsync(id, vm);
+        StatusMessage = await _repo.SaveAsync() ? "cập nhật thành công" : "cập nhật thất bại";
+        return RedirectToAction("Index");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> AddActorsToMovie(int id)
+    {
+        var movie = await _repo.GetByIdAsync(id);
+        if (movie == null)
+        {
+            return NotFound();
+        }
+        ViewData["Actors"] = await _actorRepo.GetAllAsync();
+        
+        ViewData["MovieActors"] = _repo.GetAllActorIds(movie);
+
+        return View(movie);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddActorsToMovie(int id, List<int> selectedActors)
+    {
+        var movie = await _repo.GetByIdAsync(id);
+        if (movie != null)
+        {
+            
+
+            // thêm actors mới
+            var result = await _repo.AddToActorsAsync(movie, selectedActors);
+            
+            StatusMessage = result ? "gán diễn viên thành công" : "Error: gán diễn viên thất bại";
+        }
+        return RedirectToAction("Detail", new {id});
+    }
+
+
+    [HttpGet]
+    public async Task<IActionResult> AddGenresToMovie(int id)
+    {
+        var movie = await _repo.GetByIdAsync(id);
+        if (movie == null)
+        {
+            return NotFound();
+        }
+        ViewData["Genres"] = await _genreRepo.GetAllAsync();
+
+        ViewData["MovieGenres"] = _repo.GetAllGenreIds(movie);
+
+        return View(movie);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddGenresToMovie(int id, List<int> selectedGenres)
+    {
+        var movie = await _repo.GetByIdAsync(id);
+        if (movie != null)
+        {
+
+
+            // thêm actors mới
+            var result = await _repo.AddToGenresAsync(movie, selectedGenres);
+
+            StatusMessage = result ? "gán thể loại thành công" : "Error: gán thể loại thất bại";
+        }
+        return RedirectToAction("Detail", new { id });
+    }
+
+    
 }

@@ -10,6 +10,10 @@ namespace PhimmoiClone.Areas.Cinema.Repository.MovieRepo
         Task CreateAsync(MovieViewModel movieViewModel);
         Task UpdateAsync(int id, MovieViewModel movieViewModel);
         Task DeleteAsync(int id);
+        Task<bool> AddToActorsAsync(Movie movie, List<int> actorsId);
+        Task<bool> AddToGenresAsync(Movie movie, List<int> genresId);
+        List<int>? GetAllActorIds(Movie movie);
+        List<int>? GetAllGenreIds(Movie movie);
         Task<bool> SaveAsync();
     }
 }

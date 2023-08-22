@@ -1,1 +1,38 @@
-﻿
+﻿@using PhimmoiClone.Areas.Cinema.Models
+@model List<Movie>
+
+@{
+    ViewBag.Title = "Tất cả phim";
+
+}
+
+<partial name="_StatusMessage" />
+
+<a asp-action="Create" class="btn btn-success">Thêm phim</a>
+<h2>Danh sách phim</h2>
+
+@if (Model is { Count: > 0 })
+{
+    <ul>
+        @foreach (var movie in Model)
+        {
+            <a asp-action="Detail" asp-route-id="@movie.Id" style="text-decoration-line: none">
+                <div class="card" style="width: 18rem;">
+
+                    <img src="" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">
+
+                            @movie.Name
+                        </h5>
+                    </div>
+                </div>
+            </a>
+
+        }
+    </ul>
+}
+else
+{
+    <h2 class="">Hiện chưa có phim nào</h2>
+}

@@ -1,0 +1,30 @@
+﻿@using PhimmoiClone.Areas.Cinema.Models
+@model Movie
+@{
+    var allActors = ViewData["Actors"] as List<Actor>;
+    var movieActors = ViewData["MovieActors"] as List<int>;
+}
+
+
+<form asp-action="AddActorsToMovie" method="POST">
+    <input type="hidden" name="id" value="@Model?.Id">
+
+    @if (allActors is { Count: > 0 })
+    {
+        <h3 for="">Chọn diễn viên:</h3>
+        foreach (var actor in allActors)
+        {
+            <div>
+                <input type="checkbox" name="selectedActors" value="@actor.Id"
+                @(movieActors != null && movieActors.Contains(actor.Id) ? "checked" : "") />
+                <label>@actor.Name</label>
+            </div>
+
+        }
+        <button type="submit" class="btn btn-primary">Lưu</button>
+    }
+    else
+    {
+        <h2 class="text-danger">Hiện chưa có diễn viên nào</h2>
+    }
+</form>

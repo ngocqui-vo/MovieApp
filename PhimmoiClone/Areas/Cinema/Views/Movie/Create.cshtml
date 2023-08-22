@@ -1,8 +1,28 @@
 ﻿@model PhimmoiClone.Areas.Cinema.ViewModel.MovieViewModel
 
 @{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+    ViewBag.Title = "thêm phim";
 }
 
-<h2>title</h2>
+<h2>Thêm phim</h2>
+
+<form asp-action="Create" method="POST">
+
+    <div class="mb-3">
+        <label for="Name" class="form-label">Tên</label>
+        <input class="form-control" id="Name" asp-for="Name">
+    </div>
+
+    <div class="mb-3">
+        <label for="Description" class="form-label">Mô tả</label>
+        <input class="form-control" id="Description" asp-for="Description">
+    </div>
+
+    <div class="mb-3">
+        <label for="publish" class="form-label">Ngày ra mắt</label>
+        <input class="form-control" id="publish" asp-for="Publish">
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Thêm</button>
+</form>

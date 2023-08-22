@@ -2,6 +2,7 @@
 using PhimmoiClone.Areas.Cinema.Models;
 using PhimmoiClone.Areas.Cinema.ViewModel;
 using PhimmoiClone.Data;
+using System.Linq;
 
 namespace PhimmoiClone.Areas.Cinema.Repository.MovieRepo
 {
@@ -21,7 +22,13 @@ namespace PhimmoiClone.Areas.Cinema.Repository.MovieRepo
 
         public async Task<Movie?> GetByIdAsync(int id)
         {
-            var movie = await _ctx.Movies.FirstOrDefaultAsync(x => x.Id == id);
+            var movie = await _ctx
+                .Movies
+                .Include(m => m.MovieActors)!
+                .ThenInclude(ma => ma.Actor)
+                .Include(m => m.MovieGenres)!
+                .ThenInclude(mg => mg.Genre)
+                .FirstOrDefaultAsync(x => x.Id == id);
             return movie;
         }
 
@@ -55,6 +62,21 @@ namespace PhimmoiClone.Areas.Cinema.Repository.MovieRepo
                 movie.Publish = movie.Publish;
             }
         }
+
+        
+
+        public List<int>? GetAllActorIds(Movie movie)
+        {
+            var actorIds = movie?.MovieActors?.Select(m => m.ActorId).ToList();
+            return actorIds;
+        }
+
+        public List<int>? GetAllGenreIds(Movie movie)
+        {
+            var genreIds = movie.MovieGenres?.Select(m => m.GenreId).ToList();
+            return genreIds;
+        }
+
         public async Task<bool> SaveAsync()
         {
             if (await _ctx.SaveChangesAsync() > 0)
@@ -62,18 +84,13 @@ namespace PhimmoiClone.Areas.Cinema.Repository.MovieRepo
             return false;
         }
 
-        public async Task<bool> AddToActorAsync(Movie movie, int actorId)
-        {
-            var actor = await _ctx.Actors.FirstOrDefaultAsync(a => a.Id == actorId);
-            movie?.MovieActors?.Add(new MovieActor(){Movie = movie, Actor = actor});
-            if (await SaveAsync())
-                return true;
-            return false;
-        }
-
         public async Task<bool> AddToActorsAsync(Movie movie, List<int> actorsId)
         {
+            // xóa tất cả actor cũ
+            movie.MovieActors?.Clear();
+
             var actors = await _ctx.Actors.Where(a => actorsId.Contains(a.Id)).ToListAsync();
+
             var movieActors = new List<MovieActor>();
             foreach (var actor in actors)
             {
@@ -81,37 +98,28 @@ namespace PhimmoiClone.Areas.Cinema.Repository.MovieRepo
                 movieActors.Add(movieActor);
             }
 
-            movie?.MovieActors?.AddRange(movieActors);
+            _ctx.MovieActor?.AddRange(movieActors);
             return await SaveAsync();
         }
 
-        public async Task<bool> RemoveFromActorAsync(Movie movie, int actorId)
+        public async Task<bool> AddToGenresAsync(Movie movie, List<int> genresId)
         {
-            var actor = await _ctx.Actors.FirstOrDefaultAsync(a => a.Id == actorId);
-            if (actor == null) return false;
+            // xóa tất cả actor cũ
+            movie.MovieGenres?.Clear();
 
-            var movieActorToRemove = movie?.MovieActors.SingleOrDefault(ma => ma.ActorId == actor.Id);
-            if (movieActorToRemove != null)
+            var genres = await _ctx.Genres.Where(g => genresId.Contains(g.Id)).ToListAsync();
+
+            var movieGenres = new List<MovieGenre>();
+            foreach (var genre in genres)
             {
-                movie?.MovieActors?.Remove(movieActorToRemove);
+                var movieActor = new MovieGenre { Movie = movie, Genre = genre };
+                movieGenres.Add(movieActor);
             }
-            
+
+            _ctx.MovieGenre?.AddRange(movieGenres);
             return await SaveAsync();
         }
 
-        public async Task<bool> RemoveFromActorsAsync(Movie movie, List<int> actorsId)
-        {
-            //var actors = await _ctx.Actors.Where(a => actorsId.Contains(a.Id)).ToListAsync();
-            //var movieActors = new List<MovieActor>();
-            //foreach (var actor in actors)
-            //{
-            //    var movieActor = new MovieActor { Movie = movie, Actor = actor };
-            //    movieActors.Add(movieActor);
-            //}
-
-            movie?.MovieActors?.RemoveAll(ma => actorsId.Contains(ma.MovieId));
-            return await SaveAsync();
-        }
-
+        
     }
 }

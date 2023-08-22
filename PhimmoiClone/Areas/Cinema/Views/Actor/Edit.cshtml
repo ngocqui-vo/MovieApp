@@ -1,4 +1,4 @@
-﻿@model PhimmoiClone.Areas.Cinema.Models.Actor?
+﻿@model PhimmoiClone.Areas.Cinema.Models.Actor
 
 @{
     ViewBag.Title = "title";
@@ -7,7 +7,7 @@
 
 <h2>Chỉnh sửa diễn viên: @Model?.Name</h2>
 
-<form asp-action="UpdateActor" method="POST">
+<form asp-action="Update" method="POST">
     <input type="hidden" name="id" value="@Model?.Id">
     
 
@@ -27,5 +27,5 @@
     </div>
 
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Sửa</button>
 </form>

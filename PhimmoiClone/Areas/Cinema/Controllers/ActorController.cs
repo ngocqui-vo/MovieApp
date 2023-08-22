@@ -33,7 +33,7 @@ public class ActorController : Controller
     }
 
     [HttpGet("get-actor-{id}")]
-    public async Task<IActionResult> ActorDetail(int? id)
+    public async Task<IActionResult> Detail(int? id)
     {
         if (id == null)
             return NotFound();
@@ -45,13 +45,13 @@ public class ActorController : Controller
     }
 
     [HttpGet("create-actor")]
-    public IActionResult CreateActor()
+    public IActionResult Create()
     {
         return View(new ActorViewModel());
     }
 
     [HttpPost("create-actor")]
-    public async Task<IActionResult> CreateActor(ActorViewModel actorViewModel)
+    public async Task<IActionResult> Create(ActorViewModel actorViewModel)
     {
         await _repo.CreateAsync(actorViewModel);
         if (await _repo.SaveAsync())
@@ -67,7 +67,7 @@ public class ActorController : Controller
     }
     
     [HttpGet("delete-actor-{id}")]
-    public async Task<IActionResult> DeleteActorCornFirm(int? id)
+    public async Task<IActionResult> DeleteConfirm(int? id)
     {
         if (id == null)
             return NotFound();
@@ -76,7 +76,7 @@ public class ActorController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> DeleteActor(int id)
+    public async Task<IActionResult> Delete(int id)
     {
         await _repo.DeleteAsync(id);
         if (await _repo.SaveAsync())
@@ -89,15 +89,15 @@ public class ActorController : Controller
         return RedirectToAction("index");
 
     }
-    [HttpGet("update-actor-{id}")]
-    public async Task<IActionResult> UpdateActor(int id)
+    [HttpGet("edit-actor-{id}")]
+    public async Task<IActionResult> Edit(int id)
     {
         var actor = await _repo.GetByIdAsync(id);
         return View(actor);
     }
 
-    [HttpPost("update-actor-{id}")]
-    public async Task<IActionResult> UpdateActor(int id, ActorViewModel actorViewModel)
+    [HttpPost("edit-actor-{id}")]
+    public async Task<IActionResult> Edit(int id, ActorViewModel actorViewModel)
     {
         var actor = await _repo.GetByIdAsync(id);
         if (actor == null)
@@ -112,4 +112,6 @@ public class ActorController : Controller
         StatusMessage = "cập nhật thất bại";
         return RedirectToAction("Index", new { id = id });
     }
+
+    
 }

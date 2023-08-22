@@ -1,0 +1,30 @@
+﻿@using PhimmoiClone.Areas.Cinema.Models
+@model Movie
+@{
+    var allGenres = ViewData["Genres"] as List<Genre>;
+    var movieGenres = ViewData["MovieGenres"] as List<int>;
+}
+
+
+<form asp-action="AddGenresToMovie" method="POST">
+    <input type="hidden" name="id" value="@Model?.Id">
+
+    @if (allGenres is {Count: > 0})
+    {
+        <h3 for="">Chọn thể loại:</h3>
+        foreach (var genre in allGenres)
+        {
+            <div>
+                <input type="checkbox" name="selectedActors" value="@genre.Id"
+                @(movieGenres != null && movieGenres.Contains(genre.Id) ? "checked" : "") />
+                <label>@genre.Title</label>
+            </div>
+
+        }
+        <button type="submit" class="btn btn-primary">Lưu</button>
+    }
+    else
+    {
+        <h2 class="text-danger">Hiện chưa có thể loại nào</h2>
+    }
+</form>
