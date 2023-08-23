@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PhimmoiClone.Areas.Cinema.Repository.GenreRepo;
+using PhimmoiClone.Areas.Cinema.Repository.MovieRepo;
 using PhimmoiClone.Areas.Cinema.ViewModel;
 using PhimmoiClone.Data;
 
@@ -10,20 +11,24 @@ public class GenreController : Controller
 {
     private readonly MyDbContext _ctx;
     private readonly IGenreRepo _repo;
+    private readonly IMovieRepo _movieRepo;
     private readonly ILogger<GenreController> _logger;
 
     public GenreController(
         MyDbContext ctx,
         IGenreRepo repo,
+        IMovieRepo movieRepo,
         ILogger<GenreController> logger)
     {
         _ctx = ctx;
         _repo = repo;
+        _movieRepo = movieRepo;
         _logger = logger;
     }
 
     [TempData] 
     public string StatusMessage { get; set; }
+
     public async Task<IActionResult> Index()
     {
         var genres = await _repo.GetAllAsync();

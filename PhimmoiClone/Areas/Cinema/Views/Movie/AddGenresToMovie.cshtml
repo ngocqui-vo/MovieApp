@@ -15,7 +15,7 @@
         foreach (var genre in allGenres)
         {
             <div>
-                <input type="checkbox" name="selectedActors" value="@genre.Id"
+                <input type="checkbox" name="selectedGenres" value="@genre.Id"
                 @(movieGenres != null && movieGenres.Contains(genre.Id) ? "checked" : "") />
                 <label>@genre.Title</label>
             </div>

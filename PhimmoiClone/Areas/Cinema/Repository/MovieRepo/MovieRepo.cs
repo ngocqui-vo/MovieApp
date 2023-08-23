@@ -73,7 +73,7 @@ namespace PhimmoiClone.Areas.Cinema.Repository.MovieRepo
 
         public List<int>? GetAllGenreIds(Movie movie)
         {
-            var genreIds = movie.MovieGenres?.Select(m => m.GenreId).ToList();
+            var genreIds = movie?.MovieGenres?.Select(m => m.GenreId).ToList();
             return genreIds;
         }
 
@@ -88,6 +88,7 @@ namespace PhimmoiClone.Areas.Cinema.Repository.MovieRepo
         {
             // xóa tất cả actor cũ
             movie.MovieActors?.Clear();
+            bool removeA = await SaveAsync();
 
             var actors = await _ctx.Actors.Where(a => actorsId.Contains(a.Id)).ToListAsync();
 
@@ -99,25 +100,28 @@ namespace PhimmoiClone.Areas.Cinema.Repository.MovieRepo
             }
 
             _ctx.MovieActor?.AddRange(movieActors);
-            return await SaveAsync();
+            bool removeB = await SaveAsync();
+            return removeA || removeB;
         }
 
         public async Task<bool> AddToGenresAsync(Movie movie, List<int> genresId)
         {
-            // xóa tất cả actor cũ
+            // xóa tất cả genre cũ
             movie.MovieGenres?.Clear();
+            bool removeA = await SaveAsync();
 
             var genres = await _ctx.Genres.Where(g => genresId.Contains(g.Id)).ToListAsync();
 
             var movieGenres = new List<MovieGenre>();
             foreach (var genre in genres)
             {
-                var movieActor = new MovieGenre { Movie = movie, Genre = genre };
-                movieGenres.Add(movieActor);
+                var movieGenre = new MovieGenre { Movie = movie, Genre = genre };
+                movieGenres.Add(movieGenre);
             }
 
             _ctx.MovieGenre?.AddRange(movieGenres);
-            return await SaveAsync();
+            bool removeB = await SaveAsync();
+            return removeA || removeB;
         }
 
         

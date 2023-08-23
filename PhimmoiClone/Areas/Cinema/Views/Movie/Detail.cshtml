@@ -12,7 +12,7 @@
 <h1>thông tin phim: @Model?.Name</h1>
 
 <a asp-action="AddActorsToMovie" asp-route-id="@Model?.Id" class="btn btn-success">
-    Thêm diễn viên
+    Gán diễn viên
 </a>
 <h2>Tất cả diễn viên: </h2>
 @if (actors is {Count: > 0 })
@@ -35,6 +35,9 @@ else
     <p class="text-danger">Hiện chưa có diễn viên</p>
 }
 
+<a asp-action="AddGenresToMovie" asp-route-id="@Model?.Id" class="btn btn-success">
+    Gán thể loại
+</a>
 <h2>Tất cả thể loại: </h2>
 @if (genres is { Count: > 0 })
 {

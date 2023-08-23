@@ -7,7 +7,7 @@
 <partial name="_StatusMessage"/>
 
 <a asp-action="Create" class="btn btn-success">Thêm thể loại</a>
-<h2>Danh sách diễn viên</h2>
+<h2>Danh sách thể loại</h2>
 
 @if (Model is {Count: > 0})
 {
@@ -32,6 +32,6 @@
 }
 else 
 {
-    <h2 class="">Hiện chưa có thể loại nào</h2>
+    <p class="text-danger">Hiện chưa có thể loại nào</p>
 }
 
