@@ -7,7 +7,7 @@
 
 <h2>Thêm diễn viên</h2>
 
-<form asp-action="Create" method="POST">
+<form asp-action="Create" method="POST" enctype="multipart/form-data">
 
     <div class="mb-3">
         <label for="Name" class="form-label">Tên</label>
@@ -24,7 +24,11 @@
         <input class="form-control" id="DoB" asp-for="DoB">
     </div>
     
-    
+    <div class="mb-3">
+        <label for="image" class="form-label">Hình ảnh</label>
+        <input class="form-control" id="image" asp-for="Image">
+    </div>
+
     <button type="submit" class="btn btn-primary">Thêm</button>
 </form>
 

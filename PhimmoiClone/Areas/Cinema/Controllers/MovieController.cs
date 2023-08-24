@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PhimmoiClone.Areas.Cinema.Repository.ActorRepo;
+using PhimmoiClone.Areas.Cinema.Repository.EpisodeRepo;
 using PhimmoiClone.Areas.Cinema.Repository.GenreRepo;
 using PhimmoiClone.Areas.Cinema.Repository.MovieRepo;
 using PhimmoiClone.Areas.Cinema.ViewModel;
@@ -15,6 +16,7 @@ public class MovieController : Controller
     private IMovieRepo _repo;
     private IActorRepo _actorRepo;
     private IGenreRepo _genreRepo;
+    private readonly IEpisodeRepo _episodeRepo;
     private MyDbContext _ctx;
 
     public MovieController(
@@ -22,12 +24,14 @@ public class MovieController : Controller
         IMovieRepo repo,
         IActorRepo actorRepo,
         IGenreRepo genreRepo,
+        IEpisodeRepo episodeRepo,
         MyDbContext ctx)
     {
         _logger = logger;
         _repo = repo;
         _actorRepo = actorRepo;
         _genreRepo = genreRepo;
+        _episodeRepo = episodeRepo;
         _ctx = ctx;
     }
     [TempData]

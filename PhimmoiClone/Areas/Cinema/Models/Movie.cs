@@ -15,5 +15,6 @@ public class Movie
     public float Rating { get; set; }
     public List<MovieActor>? MovieActors { get; set; }
     public List<MovieGenre>? MovieGenres { get; set; }
+    public List<MovieImage>? MovieImages { get; set; }
     public List<Episode>? Episodes { get; set; }
 }

@@ -7,7 +7,7 @@
 
 <h2>Chỉnh sửa diễn viên: @Model?.Name</h2>
 
-<form asp-action="Update" method="POST">
+<form asp-action="Edit" method="POST">
     <input type="hidden" name="id" value="@Model?.Id">
     
 
@@ -25,7 +25,11 @@
         <label for="DoB" class="form-label">Ngày sinh</label>
         <input class="form-control" id="DoB" asp-for="DoB">
     </div>
-
-
+    
+    <div class="mb-3">
+        <label for="image" class="form-label">Hình ảnh</label>
+        <input class="form-control" id="image" asp-for="Image">
+    </div>
+    
     <button type="submit" class="btn btn-primary">Sửa</button>
 </form>

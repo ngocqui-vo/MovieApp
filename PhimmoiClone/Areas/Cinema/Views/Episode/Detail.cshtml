@@ -1,0 +1,10 @@
+﻿@using PhimmoiClone.Areas.Cinema.Models
+@model Episode?
+
+@{
+    var movie = ViewData["Movie"] as Movie;
+    ViewBag.Title = movie?.Name + " " + Model?.EpNumber;
+    
+}
+
+

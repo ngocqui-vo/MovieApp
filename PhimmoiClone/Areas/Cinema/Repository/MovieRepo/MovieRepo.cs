@@ -28,6 +28,7 @@ namespace PhimmoiClone.Areas.Cinema.Repository.MovieRepo
                 .ThenInclude(ma => ma.Actor)
                 .Include(m => m.MovieGenres)!
                 .ThenInclude(mg => mg.Genre)
+                .Include(m => m.Episodes)
                 .FirstOrDefaultAsync(x => x.Id == id);
             return movie;
         }
