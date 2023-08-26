@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using PhimmoiClone.Areas.Cinema.Repository.ActorRepo;
+using PhimmoiClone.Areas.Cinema.Repository.EpisodeRepo;
 using PhimmoiClone.Areas.Cinema.Repository.GenreRepo;
 using PhimmoiClone.Areas.Cinema.Repository.MovieRepo;
 using PhimmoiClone.Data;
@@ -72,6 +73,7 @@ namespace PhimmoiClone
             builder.Services.AddScoped<IMovieRepo, MovieRepo>();
             builder.Services.AddScoped<IActorRepo, ActorRepo>();
             builder.Services.AddScoped<IGenreRepo, GenreRepo>();
+            builder.Services.AddScoped<IEpisodeRepo, EpisodeRepo>();
 
             var app = builder.Build();
 

@@ -12,12 +12,12 @@ namespace PhimmoiClone.Areas.Cinema.Controllers;
 [Route("Movie/[action]")]
 public class MovieController : Controller
 {
-    private ILogger<MovieController> _logger;
-    private IMovieRepo _repo;
-    private IActorRepo _actorRepo;
-    private IGenreRepo _genreRepo;
+    private readonly ILogger<MovieController> _logger;
+    private readonly IMovieRepo _repo;
+    private readonly IActorRepo _actorRepo;
+    private readonly IGenreRepo _genreRepo;
     private readonly IEpisodeRepo _episodeRepo;
-    private MyDbContext _ctx;
+    private readonly MyDbContext _ctx;
 
     public MovieController(
         ILogger<MovieController> logger,
@@ -25,7 +25,7 @@ public class MovieController : Controller
         IActorRepo actorRepo,
         IGenreRepo genreRepo,
         IEpisodeRepo episodeRepo,
-        MyDbContext ctx)
+        MyDbContext ctx)    
     {
         _logger = logger;
         _repo = repo;
@@ -127,8 +127,6 @@ public class MovieController : Controller
         var movie = await _repo.GetByIdAsync(id);
         if (movie != null)
         {
-            
-
             // thêm actors mới
             var result = await _repo.AddToActorsAsync(movie, selectedActors);
             

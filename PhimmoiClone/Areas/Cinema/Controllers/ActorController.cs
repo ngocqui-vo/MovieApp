@@ -93,24 +93,37 @@ public class ActorController : Controller
     public async Task<IActionResult> Edit(int id)
     {
         var actor = await _repo.GetByIdAsync(id);
-        return View(actor);
+        
+        if (actor == null)
+            return NotFound();
+
+        var actorEditViewModel = new ActorEditViewModel
+        {
+            Id = actor.Id,
+            Name = actor.Name,
+            Description = actor.Description,
+            DoB = actor.DoB,
+            ExistingImage = actor.Image,
+            Image = null
+        };
+        return View(actorEditViewModel);
     }
 
     [HttpPost("edit-actor-{id}")]
-    public async Task<IActionResult> Edit(int id, ActorViewModel actorViewModel)
+    public async Task<IActionResult> Edit(int id, ActorEditViewModel actorEditViewModel)
     {
         var actor = await _repo.GetByIdAsync(id);
         if (actor == null)
             return NotFound();
-        await _repo.UpdateAsync(id, actorViewModel);
+        await _repo.UpdateAsync(id, actorEditViewModel);
         if (await _repo.SaveAsync())
         {
             StatusMessage = "cập nhật thành công";
-            return RedirectToAction("Index", new { id = id });
+            return RedirectToAction("Index", new { id });
         }
 
         StatusMessage = "cập nhật thất bại";
-        return RedirectToAction("Index", new { id = id });
+        return RedirectToAction("Index", new { id });
     }
 
     

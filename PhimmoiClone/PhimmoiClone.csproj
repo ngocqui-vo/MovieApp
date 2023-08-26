@@ -28,6 +28,7 @@
     <Folder Include="Areas\Cinema\Services\ActorServices\" />
     <Folder Include="Areas\Database\Models\" />
     <Folder Include="Areas\Identity\Data\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
   <ItemGroup>

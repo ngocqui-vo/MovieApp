@@ -366,3 +366,6 @@ FodyWeavers.xsd
 # App settings
 PhimmoiClone/appsettings.json
 appsettings.json
+
+# wwwroot
+images/

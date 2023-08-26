@@ -11,5 +11,6 @@ public class MovieViewModel
     public string? Name { get; set; }
     public string? Description { get; set; }
     public DateTime Publish { get; set; }
+    public IFormFile[]? ListImages { get; set; }
 
 }

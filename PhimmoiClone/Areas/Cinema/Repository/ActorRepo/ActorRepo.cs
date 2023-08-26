@@ -35,9 +35,11 @@ public class ActorRepo : IActorRepo
         return actor;
     }
 
+   
+
     public async Task CreateAsync(ActorViewModel actorViewModel)
     {
-        var uniqueFileName = await UploadFile(actorViewModel);
+        var uniqueFileName = await UploadFileAsync(actorViewModel);
         var actor = new Actor()
         {
             Name = actorViewModel.Name,
@@ -48,14 +50,19 @@ public class ActorRepo : IActorRepo
         await _ctx.Actors.AddAsync(actor);
     }
 
-    private async Task<string?> UploadFile(ActorViewModel actorViewModel)
+    private async Task<string?> UploadFileAsync(ActorViewModel actorViewModel)
     {
         string? uniqueFileName = null;
         if (actorViewModel.Image != null)
         {
             string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+            if (!Directory.Exists(uploadFolder))
+            {
+                Directory.CreateDirectory(uploadFolder);
+            }
             uniqueFileName = Guid.NewGuid().ToString() + "_" + actorViewModel.Image.FileName;
             string filePath = Path.Combine(uploadFolder, uniqueFileName);
+            
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
                 await actorViewModel.Image.CopyToAsync(fileStream);
@@ -65,16 +72,29 @@ public class ActorRepo : IActorRepo
     }
 
     
-    public async Task UpdateAsync(int id, ActorViewModel actorViewModel)
+    public async Task UpdateAsync(int id, ActorEditViewModel actorEditViewModel)
     {
-        string? uniqueFileName = await UploadFile(actorViewModel);
+        
         var actor = await GetByIdAsync(id);
         if (actor != null)
         {
-            actor.Name = actorViewModel.Name;
-            actor.Description = actorViewModel.Description;
-            actor.DoB = actorViewModel.DoB;
-            actor.Image = uniqueFileName ?? actor.Image;
+            actor.Name = actorEditViewModel.Name;
+            actor.Description = actorEditViewModel.Description;
+            actor.DoB = actorEditViewModel.DoB;
+
+
+            if (actorEditViewModel.Image != null)
+            {
+                if (actorEditViewModel.ExistingImage != null)
+                {
+                    var path = Path.Combine(_webHostEnvironment.WebRootPath, "images", actorEditViewModel.ExistingImage);
+                    File.Delete(path);
+                }
+                
+                actor.Image = await UploadFileAsync(actorEditViewModel);
+            }
+
+            _ctx.Actors.Update(actor);
         }
         
     }

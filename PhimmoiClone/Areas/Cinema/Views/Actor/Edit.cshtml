@@ -1,14 +1,15 @@
-﻿@model PhimmoiClone.Areas.Cinema.Models.Actor
+﻿@model PhimmoiClone.Areas.Cinema.ViewModel.ActorEditViewModel
 
 @{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+    ViewBag.Title = "Sửa thông tin diễn viên";
+    
 }
 
 <h2>Chỉnh sửa diễn viên: @Model?.Name</h2>
 
-<form asp-action="Edit" method="POST">
+<form asp-action="Edit" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="id" value="@Model?.Id">
+    <input type="hidden" asp-for="ExistingImage" value="@Model?.ExistingImage"/>
     
 
     <div class="mb-3">
