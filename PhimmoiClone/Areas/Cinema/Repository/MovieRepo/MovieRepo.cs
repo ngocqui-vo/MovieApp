@@ -9,11 +9,14 @@ namespace PhimmoiClone.Areas.Cinema.Repository.MovieRepo
     public class MovieRepo : IMovieRepo
     {
         private MyDbContext _ctx;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public MovieRepo(MyDbContext ctx)
+        public MovieRepo(MyDbContext ctx, IWebHostEnvironment webHostEnvironment)
         {
             _ctx = ctx;
+            _webHostEnvironment = webHostEnvironment;
         }
+
         public async Task<List<Movie>> GetAllAsync()
         {
             var movies = await _ctx.Movies.ToListAsync();
@@ -29,6 +32,7 @@ namespace PhimmoiClone.Areas.Cinema.Repository.MovieRepo
                 .Include(m => m.MovieGenres)!
                 .ThenInclude(mg => mg.Genre)
                 .Include(m => m.Episodes)
+                .Include(m => m.MovieImages)
                 .FirstOrDefaultAsync(x => x.Id == id);
             return movie;
         }
@@ -36,6 +40,7 @@ namespace PhimmoiClone.Areas.Cinema.Repository.MovieRepo
 
         public async Task CreateAsync(MovieViewModel movieViewModel)
         {
+            // create movie
             Movie movie = new Movie
             {
                 Name = movieViewModel.Name,
@@ -43,7 +48,51 @@ namespace PhimmoiClone.Areas.Cinema.Repository.MovieRepo
                 Publish = movieViewModel.Publish,
             };
             await _ctx.Movies.AddAsync(movie);
+
+            // create movieImages
+            var imageNames = await UploadImagesAsync(movieViewModel);
+            List<MovieImage> listImage = new List<MovieImage>();
+            for (int i = 0; i < movieViewModel.ListImages?.Length; i++)
+            {
+                MovieImage image = new MovieImage()
+                {
+                    Name = "",
+                    Path = imageNames[i],
+                    MovieId = movie.Id,
+                    Movie = movie
+                };
+                listImage.Add(image);
+            }
+
+            await _ctx.MovieImages.AddRangeAsync(listImage);
         }
+
+        private async Task<string[]> UploadImagesAsync(MovieViewModel? movieViewModel)
+        {
+            var uniqueNames = new string[movieViewModel.ListImages.Length];
+            if (movieViewModel.ListImages.Length <= 0) 
+                return uniqueNames;
+            
+            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+
+            if (!Directory.Exists(uploadFolder))
+                Directory.CreateDirectory(uploadFolder);
+
+            for (int i = 0; i < uniqueNames.Length; i++)
+            {
+                uniqueNames[i] = Guid.NewGuid() + "_" + movieViewModel.ListImages[i].FileName;
+                string filePath = Path.Combine(uploadFolder, uniqueNames[i]);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await movieViewModel.ListImages[i].CopyToAsync(fileStream);
+                }
+            }
+
+
+            return uniqueNames;
+        }
+
 
         public async Task DeleteAsync(int id)
         {
@@ -52,7 +101,7 @@ namespace PhimmoiClone.Areas.Cinema.Repository.MovieRepo
                 _ctx.Movies.Remove(movie);
         }
 
-        
+
         public async Task UpdateAsync(int id, MovieViewModel movieViewModel)
         {
             var movie = await GetByIdAsync(id);
@@ -64,7 +113,6 @@ namespace PhimmoiClone.Areas.Cinema.Repository.MovieRepo
             }
         }
 
-        
 
         public List<int>? GetAllActorIds(Movie movie)
         {
@@ -124,7 +172,5 @@ namespace PhimmoiClone.Areas.Cinema.Repository.MovieRepo
             bool removeB = await SaveAsync();
             return removeA || removeB;
         }
-
-        
     }
 }

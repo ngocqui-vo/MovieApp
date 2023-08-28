@@ -11,6 +11,13 @@
 
 <h1>thông tin phim: @Model?.Name</h1>
 
+<h2>Hình ảnh:</h2>
+@foreach (var image in Model?.MovieImages!)
+{
+    <img src="~/images/@image.Path" alt="@image.Name" width="200px" height="200px"/>
+}
+<br>
+
 <a asp-action="AddActorsToMovie" asp-route-id="@Model?.Id" class="btn btn-success">
     Gán diễn viên
 </a>

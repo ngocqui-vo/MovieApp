@@ -55,6 +55,7 @@ public class MovieController : Controller
 
         ViewData["Actors"] = actors;
         ViewData["Genres"] = genres;
+        
 
         return View(movie);
     }
