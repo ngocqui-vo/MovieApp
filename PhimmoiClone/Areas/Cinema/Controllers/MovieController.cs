@@ -92,11 +92,20 @@ public class MovieController : Controller
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
-        ViewData["Actors"] = await _actorRepo.GetAllAsync();
-        ViewData["Genres"] = await _genreRepo.GetAllAsync();
-
         var movie = await _repo.GetByIdAsync(id);
-        return View(movie);
+
+        if (movie == null)
+            return NotFound();
+        var movieViewModel = new MovieViewModel()
+        {
+            Id = movie.Id,
+            Name = movie.Name,
+            Description = movie.Description,
+            Publish = movie.Publish,
+            ListImages = null
+        };
+        
+        return View(movieViewModel);
     }
 
     [HttpPost]

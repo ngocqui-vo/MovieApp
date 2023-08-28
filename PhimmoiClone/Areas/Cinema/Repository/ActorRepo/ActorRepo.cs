@@ -104,7 +104,16 @@ public class ActorRepo : IActorRepo
     public async Task DeleteAsync(int id)
     {
         var actor = await GetByIdAsync(id);
-        if (actor != null) _ctx.Actors.Remove(actor);
+        if (actor != null)
+        {
+            if (actor.Image != null)
+            {
+                var path = Path.Combine(_webHostEnvironment.WebRootPath, "images", actor.Image);
+                File.Delete(path);
+            }
+
+            _ctx.Actors.Remove(actor);
+        }
     }
 
     public async Task<bool> SaveAsync()

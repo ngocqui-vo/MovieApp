@@ -1,4 +1,4 @@
-﻿@model PhimmoiClone.Areas.Cinema.Models.Movie
+﻿@model PhimmoiClone.Areas.Cinema.ViewModel.MovieViewModel
 
 @{
     ViewBag.Title = "sửa phim";
@@ -7,7 +7,7 @@
 
 <h2>Chỉnh sửa phim: @Model?.Name</h2>
 
-<form asp-action="Edit" method="POST">
+<form asp-action="Edit" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="id" value="@Model?.Id">
 
 
@@ -26,6 +26,10 @@
         <input class="form-control" id="publish" asp-for="Publish">
     </div>
 
+    <div class="mb-3">
+        <label for="images" class="form-label">Hình ảnh</label>
+        <input class="form-control" id="images" asp-for="ListImages">
+    </div>
 
     <button type="submit" class="btn btn-primary">Sửa</button>
 </form>

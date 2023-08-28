@@ -38,6 +38,9 @@ public class GenreController : Controller
     public async Task<IActionResult> Detail(int id)
     {
         var genre = await _repo.GetByIdAsync(id);
+        if (genre == null)
+            return NotFound();
+        ViewData["Movies"] = genre.MovieGenres?.Select(mg => mg.Movie).ToList();
         return View(genre);
     }
 
