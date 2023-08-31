@@ -119,11 +119,11 @@ public class ActorController : Controller
         if (await _repo.SaveAsync())
         {
             StatusMessage = "cập nhật thành công";
-            return RedirectToAction("Index", new { id });
+            return RedirectToAction("Detail", new { id });
         }
 
         StatusMessage = "cập nhật thất bại";
-        return RedirectToAction("Index", new { id });
+        return RedirectToAction("Detail", new { id });
     }
 
     

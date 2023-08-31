@@ -41,14 +41,14 @@ public class EpisodeRepo : IEpisodeRepo
     }
 
     
-    public async Task UpdateAsync(int id, EpisodeViewModel episodeViewModel)
+    public async Task UpdateAsync(EpisodeUpdateViewModel vm)
     {
-        var episode = await GetByIdAsync(id);
+        var episode = await GetByIdAsync(vm.Id);
         if (episode != null)
         {
-            episode.EpNumber = episodeViewModel.EpNumber;
-            episode.EpString = episodeViewModel.EpString;
-            episode.LinkEmbed = episodeViewModel.LinkEmbed;
+            episode.EpNumber = vm.EpNumber;
+            episode.EpString = vm.EpString;
+            episode.LinkEmbed = vm.LinkEmbed;
         }
         
     }

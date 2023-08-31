@@ -10,5 +10,5 @@ public class Episode
     public string? EpString { get; set; }
     public string? LinkEmbed { get; set; }
     public int MovieId { get; set; }
-    public Cinema.Models.Movie? Movie { get; set; }
+    public Movie? Movie { get; set; }
 }

@@ -8,7 +8,7 @@ public interface IEpisodeRepo
     Task<List<Episode>> GetAllAsync();
     Task<Episode?> GetByIdAsync(int id);
     Task CreateAsync(EpisodeViewModel vm);
-    Task UpdateAsync(int id, EpisodeViewModel vm);
+    Task UpdateAsync(EpisodeUpdateViewModel vm);
     Task DeleteAsync(int id);
     Task<bool> SaveAsync();
 }

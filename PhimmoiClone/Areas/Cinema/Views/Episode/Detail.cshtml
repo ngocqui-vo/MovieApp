@@ -3,8 +3,16 @@
 
 @{
     var movie = ViewData["Movie"] as Movie;
-    ViewBag.Title = movie?.Name + " " + Model?.EpNumber;
-    
+    ViewBag.Title = movie?.Name + " tập " + Model?.EpNumber;
 }
 
+@if (Model is not null)
+{
+    
+    <h1>Thông tin phim @movie?.Name tập @Model.EpNumber</h1>
 
+    <p>Số tập: @Model.EpNumber</p>
+    <p>Link nhúng: @Model.LinkEmbed</p>    
+    @Html.Raw(Model.LinkEmbed)                               
+                              
+}

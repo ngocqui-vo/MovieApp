@@ -16,7 +16,8 @@
 {
     <img src="~/images/@image.Path" alt="@image.Name" width="200px" height="200px"/>
 }
-<br>
+
+<hr>
 
 <a asp-action="AddActorsToMovie" asp-route-id="@Model?.Id" class="btn btn-success">
     Gán diễn viên
@@ -42,6 +43,8 @@ else
     <p class="text-danger">Hiện chưa có diễn viên</p>
 }
 
+<hr>
+
 <a asp-action="AddGenresToMovie" asp-route-id="@Model?.Id" class="btn btn-success">
     Gán thể loại
 </a>
@@ -66,5 +69,46 @@ else
     <p class="text-danger">Hiện chưa có thể loại</p>
 }
 
+<hr>
+
+<a asp-controller="Episode" asp-action="Create" asp-route-movieId="@Model.Id" class="btn btn-success">Thêm tập</a>
+<h2>Tất cả tập phim:</h2>
+@if (Model.Episodes is {Count: > 0})
+{
+    @foreach (var episode in Model.Episodes)
+    {
+        <a asp-controller="Episode"
+           asp-action="Detail"
+           asp-route-movieId="@Model.Id"
+           asp-route-id="@episode.Id"
+           class="btn btn-primary"
+           >
+            @episode.EpNumber
+        </a> 
+        <span> - </span>
+        <a asp-controller="Episode"
+           asp-action="Delete"
+           asp-route-movieId="@Model.Id"
+           asp-route-id="@episode.Id"
+        >
+            Xóa
+        </a>
+        <span> - </span>
+        <a asp-controller="Episode"
+           asp-action="Edit"
+           asp-route-movieId="@Model.Id"
+           asp-route-id="@episode.Id"
+        >
+            Sửa
+        </a>
+             
+    }
+}
+else
+{
+    <p class="text-danger">Hiện chưa có tập phim nào</p>
+}
+
+<hr>
 <a asp-action="DeleteConfirm" asp-route-id="@Model?.Id" class="btn btn-danger">Xóa phim</a>
 <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-success">Sửa thông tin phim</a>

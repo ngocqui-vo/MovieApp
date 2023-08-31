@@ -1,0 +1,30 @@
+﻿@using PhimmoiClone.Areas.Cinema.Models
+@model PhimmoiClone.Areas.Cinema.ViewModel.EpisodeViewModel
+
+@{
+    ViewBag.Title = "Create episode";
+    var movie = ViewData["Movie"] as Movie;
+}
+
+<h2>Thêm tập cho phim: @movie?.Name</h2>
+
+<form asp-action="Create" method="POST">
+    <input type="hidden" name="movieId" value="@movie?.Id">
+
+    <div class="mb-3">
+        <label for="EpNumber" class="form-label">Số tập</label>
+        <input class="form-control" id="EpNumber" asp-for="EpNumber">
+    </div>
+
+    <div class="mb-3">
+        <label for="EpString" class="form-label">Tập bằng chữ</label>
+        <input class="form-control" id="EpString" asp-for="EpString">
+    </div>
+    
+    <div class="mb-3">
+        <label for="LinkEmbed" class="form-label">Nhúng link</label>
+        <input class="form-control" id="LinkEmbed" asp-for="LinkEmbed">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Thêm</button>
+</form>
