@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PhimmoiClone.Models;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 using PhimmoiClone.Areas.Cinema.Repository.MovieRepo;
+using PhimmoiClone.Data;
 
 namespace PhimmoiClone.Controllers
 {
@@ -9,28 +11,64 @@ namespace PhimmoiClone.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IMovieRepo _repo;
+        private readonly MyDbContext _ctx;
 
-        public HomeController(ILogger<HomeController> logger, IMovieRepo repo)
+        public HomeController(ILogger<HomeController> logger, IMovieRepo repo, MyDbContext ctx)
         {
             _logger = logger;
             _repo = repo;
+            _ctx = ctx;
         }
 
-        public IActionResult Index(string searchTitle)
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 3)
         {
-            // var movies = 
-            return View();
+            var movies = await _ctx.Movies
+                .Include(m => m.MovieImages)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            int totalMovieCount = _ctx.Movies.Count();
+            int totalPageCount = (int)Math.Ceiling((double)totalMovieCount / pageSize);
+
+            ViewData["TotalPageCount"] = totalPageCount;
+            ViewData["CurrentPage"] = page;
+            
+            return View(movies);
+        }
+        public async Task<IActionResult> Search(string searchTitle, int page = 1, int pageSize = 3)
+        {
+            var allMovies = _ctx.Movies
+                .Include(m => m.MovieImages)
+                .Where(m => m.Name.Contains(searchTitle));
+            var movies = await allMovies.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+            
+            int totalMovieCount = _ctx.Movies.Count();
+            int totalPageCount = (int)Math.Ceiling((double)totalMovieCount / pageSize);
+
+            ViewData["TotalPageCount"] = totalPageCount;
+            ViewData["CurrentPage"] = page;
+            
+            return View(movies);
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Detail(int id)
         {
-            return View();
+            var movie = await _repo.GetByIdAsync(id);
+            if (movie == null)
+                return NotFound();
+            return View(movie);
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        
+        public async Task<IActionResult> MovieWithEpisode(int movieId, int episodeId)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var movie = await _repo.GetByIdAsync(movieId);
+            if (movie == null)
+                return NotFound();
+            
+            
+            
+            return View(movie);
         }
     }
 }

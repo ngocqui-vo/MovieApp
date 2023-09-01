@@ -1,0 +1,66 @@
+﻿@using PhimmoiClone.Data
+@using Microsoft.EntityFrameworkCore
+@model List<PhimmoiClone.Areas.Cinema.Models.Movie>
+@inject MyDbContext Ctx
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_MovieLayout";
+
+    var totalPageCount = ViewData["TotalPageCount"] as int?;
+    var currentPage = ViewData["CurrentPage"] as int?;
+    bool hasPrevious = currentPage != 1;
+    bool hasNext = currentPage < totalPageCount;
+    var newMovies = await Ctx.Movies.Include(m => m.MovieImages).Take(3).ToListAsync();
+}
+
+
+<!-- Container -->
+<div class="container my-4">
+    <h2 class="mb-4 text-white">Kết quả tìm kiếm</h2>
+    <div class="row">
+        @* phim *@
+        @foreach (var movie in Model)
+        {
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="~/images/@movie.MovieImages?[0].Path" class="card-img-top" alt="@movie?.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@movie?.Name</h5>
+                        <p class="card-text">@movie?.Description</p>
+                        <a href="@Url.Action("Detail", new { id = movie?.Id })" class="btn btn-primary">Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+    <!-- Paging -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(hasPrevious ? "" : "disabled")">
+                <a class="page-link" href="@Url.Action("Index", new { page = currentPage - 1 })"
+                   tabindex="-1" aria-disabled="true">
+                    Previous
+                </a>
+            </li>
+            @for (int i = 1; i <= totalPageCount; i++)
+            {
+                <li class="page-item">
+                    <a
+                        class="page-link @(currentPage == i ? "active" : "")"
+                        href="@Url.Action("Search", new { page = i })">
+                        @i
+                    </a>
+                </li>
+            }
+
+            <li class="page-item">
+                <a class="page-link @(hasNext ? "" : "disabled")"
+                   href="@Url.Action("Search", new { page = currentPage + 1 })">
+                    Next
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

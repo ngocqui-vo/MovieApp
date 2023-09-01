@@ -1,0 +1,32 @@
+﻿@model PhimmoiClone.Areas.Cinema.Models.Movie
+
+@{
+    Layout = "_MovieLayout";
+}
+
+<!-- Chi tiết phim -->
+    <div class="container my-4 text-white">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="~/images/@Model.MovieImages[0].Path" class="img-fluid" alt="Phim 1">
+            </div>
+            <div class="col-md-6">
+                <h2>@Model.Name</h2>
+                <p>Thể loại: Tình cảm, Hành động</p>
+                <p>Đạo diễn: Đạo diễn A</p>
+                <p>Diễn viên: Diễn viên A, Diễn viên B, Diễn viên C</p>
+                <p>Năm phát hành: 2023</p>
+                <p>Quốc gia: Việt Nam</p>
+                <h3>Mô tả phim</h3>
+                <p>@Model.Description</p>
+                @if (Model.Episodes is {Count: > 0 })
+                {
+                    <a href="@Url.Action("MovieWithEpisode", "Home", new {movieId = Model.Id, episodeId = Model?.Episodes?[0].Id})" class="btn btn-primary">Xem phim</a>
+                }
+                else
+                {
+                    <p class="text-danger">Hiện chưa có tập phim nào</p>
+                }
+            </div>
+        </div>
+    </div>

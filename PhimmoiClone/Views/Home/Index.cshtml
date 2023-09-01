@@ -1,9 +1,83 @@
-﻿@{
+﻿@using PhimmoiClone.Data
+@using Microsoft.EntityFrameworkCore
+@model List<PhimmoiClone.Areas.Cinema.Models.Movie>
+@inject MyDbContext Ctx
+@{
     ViewData["Title"] = "Home Page";
     Layout = "_MovieLayout";
+    
+    var totalPageCount = ViewData["TotalPageCount"] as int?;
+    var currentPage = ViewData["CurrentPage"] as int?;
+    bool hasPrevious = currentPage != 1;
+    bool hasNext = currentPage < totalPageCount;
+    var newMovies = await Ctx.Movies.Include(m => m.MovieImages).Take(3).ToListAsync();
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Carousel -->
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @for (int i = 0; i < newMovies?.Count; i++)
+            {
+                <div class="carousel-item active">
+                    <img src="~/images/@newMovies?[i].MovieImages?[0].Path" class="d-block w-100" alt="Phim 1">
+                </div>
+            }
+            
+
+        </div>
+        <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </a>
+    </div>
+
+    <!-- Container -->
+    <div class="container my-4">
+        <h2 class="mb-4 text-white">Các Phim Mới</h2>
+        <div class="row">
+            @* phim *@
+            @foreach (var movie in Model)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card">
+                        <img src="~/images/@movie.MovieImages?[0].Path" class="card-img-top" alt="@movie?.Name">
+                        <div class="card-body">
+                            <h5 class="card-title">@movie?.Name</h5>
+                            <p class="card-text">@movie?.Description</p>
+                            <a href="@Url.Action("Detail", new {id = movie?.Id})" class="btn btn-primary">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+        <!-- Paging -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item @(hasPrevious ? "" : "disabled")">
+                    <a class="page-link" href="@Url.Action("Index", new {page = currentPage-1})" 
+                       tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+                @for (int i = 1; i <= totalPageCount; i++)
+                {
+                    <li class="page-item">
+                        <a
+                            class="page-link @(currentPage == i ? "active" : "")"
+                            href="@Url.Action("Index", new {page = i})">
+                            @i
+                        </a>
+                    </li>
+                }
+                
+                <li class="page-item">
+                    <a class="page-link @(hasNext ? "" : "disabled")" 
+                       href="@Url.Action("Index", new {page = currentPage+1})">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
