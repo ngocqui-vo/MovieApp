@@ -65,10 +65,15 @@ namespace PhimmoiClone.Controllers
             var movie = await _repo.GetByIdAsync(movieId);
             if (movie == null)
                 return NotFound();
+
+            var episodes = movie.Episodes?.OrderBy(m => m.EpNumber).ToList();
+            ViewData["Episodes"] = episodes;
+            ViewData["Movie"] = movie;
+            var epsiode = episodes?.FirstOrDefault(ep => ep.Id == episodeId);
+            if (epsiode == null)
+                return NotFound();
             
-            
-            
-            return View(movie);
+            return View(epsiode);
         }
     }
 }

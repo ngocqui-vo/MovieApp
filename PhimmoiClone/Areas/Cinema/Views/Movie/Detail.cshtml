@@ -7,7 +7,7 @@
     var genres = ViewData["Genres"] as List<Genre>;
 }
 
-<partial name="_StatusMessage" />
+<partial name="_StatusMessage"/>
 
 <h1>thông tin phim: @Model?.Name</h1>
 
@@ -77,31 +77,29 @@ else
 {
     @foreach (var episode in Model.Episodes)
     {
-        <a asp-controller="Episode"
-           asp-action="Detail"
-           asp-route-movieId="@Model.Id"
-           asp-route-id="@episode.Id"
-           class="btn btn-primary"
-           >
-            @episode.EpNumber
-        </a> 
-        <span> - </span>
-        <a asp-controller="Episode"
-           asp-action="Delete"
-           asp-route-movieId="@Model.Id"
-           asp-route-id="@episode.Id"
-        >
-            Xóa
-        </a>
-        <span> - </span>
-        <a asp-controller="Episode"
-           asp-action="Edit"
-           asp-route-movieId="@Model.Id"
-           asp-route-id="@episode.Id"
-        >
-            Sửa
-        </a>
-             
+        <div style="margin-top: 10px">
+            <a asp-controller="Episode"
+               asp-action="Detail"
+               asp-route-movieId="@Model.Id"
+               asp-route-id="@episode.Id"
+               class="btn btn-primary">
+                @episode.EpNumber
+            </a>
+            <span> - </span>
+            <a asp-controller="Episode"
+               asp-action="Delete"
+               asp-route-movieId="@Model.Id"
+               asp-route-id="@episode.Id">
+                Xóa
+            </a>
+            <span> - </span>
+            <a asp-controller="Episode"
+               asp-action="Edit"
+               asp-route-movieId="@Model.Id"
+               asp-route-id="@episode.Id">
+                Sửa
+            </a>
+        </div>
     }
 }
 else

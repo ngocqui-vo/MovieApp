@@ -1,8 +1,32 @@
-﻿@model PhimmoiClone.Areas.Cinema.Models.Movie
+﻿@using PhimmoiClone.Areas.Cinema.Models
+@model Episode
 
 @{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+    ViewBag.Title = $"tập {Model.EpNumber}";
+    Layout = "_MovieLayout";
+    var movie = ViewData["Movie"] as Movie;
+    var episodes = ViewData["Episodes"] as List<Episode>;
 }
 
-<h2>title</h2>
+<div class="container">
+    <div class="row">
+        @Html.Raw(Model.LinkEmbed)
+    </div>
+    <div class="row">
+        <div class="episodes">
+        @if (episodes is {Count: > 0})
+        {
+            @foreach (var ep in episodes)
+            {
+
+                <a
+                    class="episode @(ep.Id == Model.Id ? "ep-active" : "")"
+                    href="@Url.Action("MovieWithEpisode", new { movieId = movie?.Id,episodeId = ep.Id })">
+                    @ep.EpNumber
+                </a>
+                
+            }
+        }
+        </div >
+    </div>
+</div>
