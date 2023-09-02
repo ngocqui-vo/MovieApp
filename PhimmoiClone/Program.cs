@@ -5,6 +5,7 @@ using PhimmoiClone.Areas.Cinema.Repository.ActorRepo;
 using PhimmoiClone.Areas.Cinema.Repository.EpisodeRepo;
 using PhimmoiClone.Areas.Cinema.Repository.GenreRepo;
 using PhimmoiClone.Areas.Cinema.Repository.MovieRepo;
+using PhimmoiClone.Areas.Identity.Models;
 using PhimmoiClone.Data;
 using PhimmoiClone.Mail;
 
@@ -28,7 +29,7 @@ namespace PhimmoiClone
 
             builder.Services.AddTransient<MyDbContext>();
 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+            builder.Services.AddIdentity<AppUser, IdentityRole>()
                             .AddEntityFrameworkStores<MyDbContext>()
                             .AddDefaultTokenProviders();
 

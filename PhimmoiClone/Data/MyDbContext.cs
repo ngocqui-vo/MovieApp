@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PhimmoiClone.Areas.Cinema.EntityConfig;
 using PhimmoiClone.Areas.Cinema.Models;
+using PhimmoiClone.Areas.Identity.Models;
 
 namespace PhimmoiClone.Data
 {
-    public class MyDbContext : IdentityDbContext<IdentityUser>
+    public class MyDbContext : IdentityDbContext<AppUser>
     {
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
         {
@@ -19,6 +20,7 @@ namespace PhimmoiClone.Data
         public DbSet<MovieActor> MovieActor { get; set; }
         public DbSet<MovieGenre> MovieGenre { get; set; }
         public DbSet<MovieImage> MovieImages { get; set; }
+       
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -43,6 +45,9 @@ namespace PhimmoiClone.Data
             
             // MovieGenre model config
             builder.ApplyConfiguration(new MovieGenreConfiguration());
+            
+            // Comment model config
+            builder.ApplyConfiguration(new CommentConfiguration());
         }
         
     }

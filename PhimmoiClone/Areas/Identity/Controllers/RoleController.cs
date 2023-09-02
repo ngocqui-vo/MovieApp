@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PhimmoiClone.Areas.Identity.Models;
+using PhimmoiClone.Areas.Identity.ViewModels;
 using PhimmoiClone.Data;
 
 namespace PhimmoiClone.Areas.Identity.Controllers;

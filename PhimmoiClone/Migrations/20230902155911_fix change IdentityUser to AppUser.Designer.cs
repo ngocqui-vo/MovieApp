@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PhimmoiClone.Data;
 
@@ -11,9 +12,10 @@ using PhimmoiClone.Data;
 namespace PhimmoiClone.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230902155911_fix change IdentityUser to AppUser")]
+    partial class fixchangeIdentityUsertoAppUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,28 +182,6 @@ namespace PhimmoiClone.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Actors");
-                });
-
-            modelBuilder.Entity("PhimmoiClone.Areas.Cinema.Models.Comment", b =>
-                {
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MovieId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("PhimmoiClone.Areas.Cinema.Models.Episode", b =>
@@ -450,25 +430,6 @@ namespace PhimmoiClone.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PhimmoiClone.Areas.Cinema.Models.Comment", b =>
-                {
-                    b.HasOne("PhimmoiClone.Areas.Cinema.Models.Movie", "Movie")
-                        .WithMany("Comments")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PhimmoiClone.Areas.Identity.Models.AppUser", "User")
-                        .WithMany("Comments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("PhimmoiClone.Areas.Cinema.Models.Episode", b =>
                 {
                     b.HasOne("PhimmoiClone.Areas.Cinema.Models.Movie", "Movie")
@@ -541,8 +502,6 @@ namespace PhimmoiClone.Migrations
 
             modelBuilder.Entity("PhimmoiClone.Areas.Cinema.Models.Movie", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("Episodes");
 
                     b.Navigation("MovieActors");
@@ -550,11 +509,6 @@ namespace PhimmoiClone.Migrations
                     b.Navigation("MovieGenres");
 
                     b.Navigation("MovieImages");
-                });
-
-            modelBuilder.Entity("PhimmoiClone.Areas.Identity.Models.AppUser", b =>
-                {
-                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

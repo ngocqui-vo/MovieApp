@@ -1,3 +1,12 @@
+body {
+  background-color: #333;
+  color: white;
+}
+
+footer {
+  color: white;
+}
+
 .episodes {
   display: flex;
   flex-wrap: wrap;

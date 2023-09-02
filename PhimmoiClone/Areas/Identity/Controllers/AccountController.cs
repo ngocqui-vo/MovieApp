@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
-using PhimmoiClone.Areas.Identity.Models;
+using PhimmoiClone.Areas.Identity.ViewModels;
 using PhimmoiClone.Ultilities;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Encodings.Web;
 using Microsoft.EntityFrameworkCore;
+using PhimmoiClone.Areas.Identity.Models;
 
 namespace PhimmoiClone.Areas.Identity.Controllers
 {
@@ -98,7 +99,7 @@ namespace PhimmoiClone.Areas.Identity.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser
+                var user = new AppUser
                 {
                     UserName = registerModel.Username,
                     Email = registerModel.Email

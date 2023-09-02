@@ -2,7 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PhimmoiClone.Areas.Identity.Models;
+using PhimmoiClone.Areas.Identity.ViewModels;
 using PhimmoiClone.Data;
 
 namespace PhimmoiClone.Areas.Identity.Controllers;

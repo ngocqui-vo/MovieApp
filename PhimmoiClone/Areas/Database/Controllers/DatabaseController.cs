@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PhimmoiClone.Areas.Identity.Models;
 using PhimmoiClone.Data;
 
 namespace PhimmoiClone.Areas.Database.Controllers;
@@ -84,7 +85,7 @@ public class DatabaseController : Controller
         }
         if (await _userManager.FindByEmailAsync("admin@gmail.com") == null)
         {
-            var adminUser = new IdentityUser()
+            var adminUser = new AppUser()
             {
                 UserName = "admin",
                 Email = "admin@gmail.com"

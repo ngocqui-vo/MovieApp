@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PhimmoiClone.Areas.Identity.Models
+namespace PhimmoiClone.Areas.Identity.ViewModels
 {
     public class RegisterViewModel
     {
