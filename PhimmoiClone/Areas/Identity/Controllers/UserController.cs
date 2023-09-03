@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PhimmoiClone.Areas.Identity.Models;
 using PhimmoiClone.Areas.Identity.ViewModels;
 using PhimmoiClone.Data;
 
@@ -11,16 +12,16 @@ namespace PhimmoiClone.Areas.Identity.Controllers;
 [Route("User/[action]")]
 public class UserController : Controller
 {
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly UserManager<AppUser> _userManager;
+    private readonly SignInManager<AppUser> _signInManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly MyDbContext _ctx;
     private readonly ILogger<UserController> _logger;
     
     public UserController(
         MyDbContext ctx,
-        UserManager<IdentityUser> userManager,
-        SignInManager<IdentityUser> signInManager,
+        UserManager<AppUser> userManager,
+        SignInManager<AppUser> signInManager,
         RoleManager<IdentityRole> roleManager,
         ILogger<UserController> logger)
     {

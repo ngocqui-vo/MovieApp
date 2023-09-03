@@ -14,12 +14,12 @@ public class RoleController : Controller
 {
     private readonly MyDbContext _ctx;
     private readonly RoleManager<IdentityRole> _roleManager;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<AppUser> _userManager;
 
     public RoleController(
         MyDbContext ctx,
         RoleManager<IdentityRole> roleManager, 
-        UserManager<IdentityUser> userManager)
+        UserManager<AppUser> userManager)
     {
         _ctx = ctx;
         _roleManager = roleManager;

@@ -1,11 +1,18 @@
 ﻿@using PhimmoiClone.Areas.Cinema.Models
+@using Microsoft.AspNetCore.Identity
+@using PhimmoiClone.Areas.Identity.Models
 @model Episode
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
 
 @{
     ViewBag.Title = $"tập {Model.EpNumber}";
     Layout = "_MovieLayout";
     var movie = ViewData["Movie"] as Movie;
     var episodes = ViewData["Episodes"] as List<Episode>;
+    var comments = ViewData["Comments"] as List<Comment>;
+
 }
 
 <div class="container">
@@ -14,19 +21,156 @@
     </div>
     <div class="row">
         <div class="episodes">
-        @if (episodes is {Count: > 0})
-        {
-            @foreach (var ep in episodes)
+            @if (episodes is {Count: > 0})
             {
-
-                <a
-                    class="episode @(ep.Id == Model.Id ? "ep-active" : "")"
-                    href="@Url.Action("MovieWithEpisode", new { movieId = movie?.Id,episodeId = ep.Id })">
-                    @ep.EpNumber
-                </a>
-                
+                @foreach (var ep in episodes)
+                {
+                    <a
+                        class="episode @(ep.Id == Model.Id ? "ep-active" : "")"
+                        href="@Url.Action("MovieWithEpisode", new { movieId = movie?.Id, episodeId = ep.Id })">
+                        @ep.EpNumber
+                    </a>
+                }
             }
-        }
         </div >
     </div>
+
+    <!-- Comment section -->
+    <h1>Comments:</h1>
+
+    <div class="container mt-3">
+        <div id="comment-list">
+            <!-- Đây là nơi để hiển thị các comment đã có sẵn -->
+            
+
+            <!-- Thêm các comment đã có sẵn ở đây -->
+        </div>
+
+        <hr>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <form id="comment-form">
+
+                <div class="mb-3">
+                    <label for="comment" class="form-label">Bình luận:</label>
+                    <textarea class="form-control" id="comment" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Thêm bình luận</button>
+            </form>
+        }
+        else
+        {
+            <h4 class="text-danger">Cần đăng nhập để comment!!!</h4>
+        }
+    </div>
 </div>
+
+@section Scripts {
+    <script>
+    loadComments()
+    $(document).ready(function() {
+        $("#comment-form").submit(function(e) {
+            e.preventDefault();
+                       
+            let username = '@UserManager.GetUserId(User)';
+            let commentText = $("#comment").val();
+            let movieId = '@movie?.Id'; 
+            
+            let commentData = {
+                UserId: username,
+                MovieId: movieId,
+                Message: commentText
+            };
+    
+            $.ajax({
+                url: '@Url.Action("AddComment", "Comment")',
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(commentData),
+                success: function(response) {
+                    loadComments()
+                    $('#comment').val('')
+                },
+                error: function(error) {
+                    console.error("Lỗi: " + error);
+                }
+            });
+        });
+    });
+    $(document).on("click", ".delete-comment-btn", function() {
+        
+        let commentId = $(this).data("commentid");
+    
+        // Gửi yêu cầu xóa bình luận
+        $.ajax({
+            url: "/Comment/DeleteComment?commentId=" + commentId,
+            type: "GET",
+            success: function(response) {
+                // Sau khi xóa thành công, tải lại danh sách bình luận
+                loadComments();
+            },
+            error: function(error) {
+                console.error("Lỗi: " + error);
+            }
+        });
+    });
+    function loadComments() {
+        $.get({
+            url: '@Url.Action("LoadComments", "Comment", new { movieId = movie?.Id })',
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                let commentList = $("#comment-list");
+                commentList.empty();
+                if (data && data.length > 0) {
+                    
+                    
+    
+                    $.each(data, function(index, comment) {
+                        getCurrentUser().then(function (data) {
+                            let currentUserName
+                            currentUserName = data.userName
+                            //console.log(currentUserName)
+                            let commentHtml = `
+                                <div class="comment">
+                                    <h4>${comment.userName}
+                                    ${comment.userName == currentUserName ? '- <button class="btn btn-danger delete-comment-btn" data-commentid=' + comment.id +'>xóa</button></h4>' : ''}
+                                                                    
+                                    <p>${comment.message}</p>
+                                </div>
+                            `;
+                                                    commentList.prepend(commentHtml);
+                        }).catch((err) => console.log('loi'))
+                        
+                    });
+                }
+                else {
+                    let commentHtml = '<p class="text-danger">Hiện chưa có comment</p>'
+                    commentList.prepend(commentHtml);
+                }
+            },
+            error: function(error) {
+                console.error("Lỗi khi tải comment: " + error);
+            }
+        });
+    }
+    function getCurrentUser(){
+        
+        return new Promise(function (resolve, reject) {
+            $.get({
+                url: '@Url.Action("GetCurrentUserName", "Account", new { area = "Identity" })',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    resolve(data)
+                },
+                error: function(err) {
+                    reject(err)
+                }
+            })
+        })
+    }
+    
+    </script>
+
+}

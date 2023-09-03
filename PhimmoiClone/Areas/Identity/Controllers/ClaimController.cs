@@ -13,16 +13,16 @@ namespace PhimmoiClone.Areas.Identity.Controllers;
 [Route("Claim/[action]")]
 public class ClaimController : Controller
 {
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly UserManager<AppUser> _userManager;
+    private readonly SignInManager<AppUser> _signInManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly MyDbContext _ctx;
     private readonly ILogger<UserController> _logger;
     
     public ClaimController(
         MyDbContext ctx,
-        UserManager<IdentityUser> userManager,
-        SignInManager<IdentityUser> signInManager,
+        UserManager<AppUser> userManager,
+        SignInManager<AppUser> signInManager,
         RoleManager<IdentityRole> roleManager,
         ILogger<UserController> logger)
     {

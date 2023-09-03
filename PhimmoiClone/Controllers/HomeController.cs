@@ -67,6 +67,8 @@ namespace PhimmoiClone.Controllers
                 return NotFound();
 
             var episodes = movie.Episodes?.OrderBy(m => m.EpNumber).ToList();
+            
+            ViewData["Comments"] = movie.Comments;
             ViewData["Episodes"] = episodes;
             ViewData["Movie"] = movie;
             var epsiode = episodes?.FirstOrDefault(ep => ep.Id == episodeId);

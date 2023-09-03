@@ -16,14 +16,14 @@ namespace PhimmoiClone.Areas.Identity.Controllers
     [Route("Account/[action]")]
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
        
         private readonly ILogger<AccountController> _logger;
         private readonly IEmailSender _emailSender;
         public AccountController(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager,
             
             ILogger<AccountController> logger,
             IEmailSender emailSender)
@@ -54,7 +54,7 @@ namespace PhimmoiClone.Areas.Identity.Controllers
             // tìm user với email
             if (ModelState.IsValid)
             {
-                if (!result.Succeeded && AppUltilities.IsValidEmail(loginModel.UserNameOrEmail))
+                if (!result.Succeeded && AppUltilities.IsValidEmail(loginModel.UserNameOrEmail!))
                 {
                     var user = await _userManager.FindByEmailAsync(loginModel.UserNameOrEmail);
                     if (user != null)
@@ -154,6 +154,17 @@ namespace PhimmoiClone.Areas.Identity.Controllers
 
             return View(result.Succeeded ? "ConfirmEmail" : "ErrorConfirmEmail");
             
+        }
+
+        [HttpGet]
+        public IActionResult GetCurrentUserName()
+        {
+            var isSignedIn = _signInManager.IsSignedIn(User);
+            if (!isSignedIn)
+                return BadRequest("user chua dang nhap");
+            var userName = _userManager.GetUserName(User);
+            var jsonResult = new { userName };
+            return Json(jsonResult);
         }
     }
 }

@@ -20,7 +20,9 @@ namespace PhimmoiClone.Data
         public DbSet<MovieActor> MovieActor { get; set; }
         public DbSet<MovieGenre> MovieGenre { get; set; }
         public DbSet<MovieImage> MovieImages { get; set; }
-       
+        
+        public DbSet<Comment> Comments { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
