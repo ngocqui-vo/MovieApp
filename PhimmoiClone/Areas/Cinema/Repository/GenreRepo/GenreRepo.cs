@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PhimmoiClone.Areas.Cinema.Models;
-using PhimmoiClone.Areas.Cinema.ViewModel;
-using PhimmoiClone.Data;
+using MovieApp.Areas.Cinema.Models;
+using MovieApp.Areas.Cinema.ViewModel;
+using MovieApp.Data;
 
-namespace PhimmoiClone.Areas.Cinema.Repository.GenreRepo;
+namespace MovieApp.Areas.Cinema.Repository.GenreRepo;
 
 public class GenreRepo : IGenreRepo
 {

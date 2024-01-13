@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Database\Models\**" />
+    <Content Remove="Areas\Database\Models\**" />
+    <EmbeddedResource Remove="Areas\Database\Models\**" />
+    <None Remove="Areas\Database\Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MailKit" Version="4.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.20" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.20" />
@@ -25,7 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Database\Models\" />
     <Folder Include="Areas\Identity\Data\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>

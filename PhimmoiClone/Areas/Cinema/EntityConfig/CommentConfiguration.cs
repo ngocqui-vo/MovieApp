@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PhimmoiClone.Areas.Cinema.Models;
-using PhimmoiClone.Areas.Identity.Models;
+using MovieApp.Areas.Cinema.Models;
+using MovieApp.Areas.Identity.Models;
 
-namespace PhimmoiClone.Areas.Cinema.EntityConfig;
+namespace MovieApp.Areas.Cinema.EntityConfig;
 
 public class CommentConfiguration : IEntityTypeConfiguration<Comment>
 {

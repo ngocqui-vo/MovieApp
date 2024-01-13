@@ -2,15 +2,15 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using PhimmoiClone.Areas.Cinema.Repository.ActorRepo;
-using PhimmoiClone.Areas.Cinema.Repository.EpisodeRepo;
-using PhimmoiClone.Areas.Cinema.Repository.GenreRepo;
-using PhimmoiClone.Areas.Cinema.Repository.MovieRepo;
-using PhimmoiClone.Areas.Identity.Models;
-using PhimmoiClone.Data;
-using PhimmoiClone.Mail;
+using MovieApp.Areas.Cinema.Repository.ActorRepo;
+using MovieApp.Areas.Cinema.Repository.EpisodeRepo;
+using MovieApp.Areas.Cinema.Repository.GenreRepo;
+using MovieApp.Areas.Cinema.Repository.MovieRepo;
+using MovieApp.Areas.Identity.Models;
+using MovieApp.Data;
+using MovieApp.Mail;
 
-namespace PhimmoiClone
+namespace MovieApp
 {
     public class Program
     {
@@ -24,7 +24,7 @@ namespace PhimmoiClone
                 {
                     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                 });
-            
+
 
             builder.Services.AddDbContext<MyDbContext>(options =>
             {
@@ -92,7 +92,7 @@ namespace PhimmoiClone
             }
             else
             {
-                
+
             }
 
             app.UseHttpsRedirection();
@@ -115,7 +115,7 @@ namespace PhimmoiClone
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            
+
 
             app.Run();
         }

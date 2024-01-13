@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PhimmoiClone.Areas.Cinema.Models;
+using MovieApp.Areas.Cinema.Models;
 
-namespace PhimmoiClone.Areas.Cinema.EntityConfig;
+namespace MovieApp.Areas.Cinema.EntityConfig;
 
 public class MovieActorConfiguration : IEntityTypeConfiguration<MovieActor>
 {

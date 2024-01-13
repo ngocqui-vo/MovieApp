@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace PhimmoiClone.Migrations
+namespace MovieApp.Migrations
 {
     public partial class addmovieImagemodel : Migration
     {

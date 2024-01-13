@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PhimmoiClone.Models;
+using MovieApp.Models;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using PhimmoiClone.Areas.Cinema.Models;
-using PhimmoiClone.Areas.Cinema.Repository.MovieRepo;
-using PhimmoiClone.Data;
+using MovieApp.Areas.Cinema.Models;
+using MovieApp.Areas.Cinema.Repository.MovieRepo;
+using MovieApp.Data;
 
-namespace PhimmoiClone.Controllers
+namespace MovieApp.Controllers
 {
     
     public class HomeController : Controller

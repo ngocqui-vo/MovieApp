@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
 
-namespace PhimmoiClone.Mail
+namespace MovieApp.Mail
 {
     public class MailSettings
     {

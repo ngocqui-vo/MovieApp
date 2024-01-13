@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PhimmoiClone.Areas.Cinema.EntityConfig;
-using PhimmoiClone.Areas.Cinema.Models;
-using PhimmoiClone.Areas.Identity.Models;
+using MovieApp.Areas.Cinema.EntityConfig;
+using MovieApp.Areas.Cinema.Models;
+using MovieApp.Areas.Identity.Models;
 
-namespace PhimmoiClone.Data
+namespace MovieApp.Data
 {
     public class MyDbContext : IdentityDbContext<AppUser>
     {

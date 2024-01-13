@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace PhimmoiClone.Views.Home;
+namespace MovieApp.Views.Home;
 
 public class Detail : PageModel
 {

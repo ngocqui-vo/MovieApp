@@ -1,4 +1,4 @@
-namespace PhimmoiClone.Areas.Identity.ViewModels
+namespace MovieApp.Areas.Identity.ViewModels
 {
     public class AddClaimRoleViewModel
     {

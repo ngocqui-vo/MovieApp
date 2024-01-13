@@ -2,15 +2,15 @@
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
-using PhimmoiClone.Areas.Identity.ViewModels;
-using PhimmoiClone.Ultilities;
+using MovieApp.Areas.Identity.ViewModels;
+using MovieApp.Ultilities;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Encodings.Web;
 using Microsoft.EntityFrameworkCore;
-using PhimmoiClone.Areas.Identity.Models;
+using MovieApp.Areas.Identity.Models;
 
-namespace PhimmoiClone.Areas.Identity.Controllers
+namespace MovieApp.Areas.Identity.Controllers
 {
     [Area("Identity")]
     [Route("Account/[action]")]

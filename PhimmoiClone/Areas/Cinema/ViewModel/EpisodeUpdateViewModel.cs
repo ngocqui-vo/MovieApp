@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PhimmoiClone.Areas.Cinema.ViewModel;
+namespace MovieApp.Areas.Cinema.ViewModel;
 
 public class EpisodeUpdateViewModel
 {

@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace PhimmoiClone.Ultilities
+namespace MovieApp.Ultilities
 {
     public class AppUltilities
     {

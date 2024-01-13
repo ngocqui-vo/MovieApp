@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using PhimmoiClone.Areas.Cinema.Models;
-using PhimmoiClone.Areas.Cinema.ViewModel;
-using PhimmoiClone.Data;
+using MovieApp.Areas.Cinema.Models;
+using MovieApp.Areas.Cinema.ViewModel;
+using MovieApp.Data;
 
-namespace PhimmoiClone.Areas.Cinema.Repository.ActorRepo;
+namespace MovieApp.Areas.Cinema.Repository.ActorRepo;
 
 public class ActorRepo : IActorRepo
 {

@@ -1,7 +1,7 @@
-﻿using PhimmoiClone.Areas.Cinema.Models;
+﻿using MovieApp.Areas.Cinema.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace PhimmoiClone.Areas.Cinema.ViewModel;
+namespace MovieApp.Areas.Cinema.ViewModel;
 
 public class MovieViewModel
 {

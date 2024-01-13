@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PhimmoiClone.Data;
+using MovieApp.Data;
 
 #nullable disable
 
-namespace PhimmoiClone.Migrations
+namespace MovieApp.Migrations
 {
     [DbContext(typeof(MyDbContext))]
     [Migration("20230903083501_fix comment error")]

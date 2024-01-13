@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PhimmoiClone.Areas.Cinema.Repository.EpisodeRepo;
-using PhimmoiClone.Areas.Cinema.Repository.MovieRepo;
-using PhimmoiClone.Areas.Cinema.ViewModel;
+using MovieApp.Areas.Cinema.Repository.EpisodeRepo;
+using MovieApp.Areas.Cinema.Repository.MovieRepo;
+using MovieApp.Areas.Cinema.ViewModel;
 
-namespace PhimmoiClone.Areas.Cinema.Controllers;
+namespace MovieApp.Areas.Cinema.Controllers;
 [Area("Cinema")]
 [Route("movie-{movieId}-[action]")]
 public class EpisodeController : Controller

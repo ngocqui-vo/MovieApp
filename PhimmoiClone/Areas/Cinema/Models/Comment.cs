@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using PhimmoiClone.Areas.Identity.Models;
+using MovieApp.Areas.Identity.Models;
 
-namespace PhimmoiClone.Areas.Cinema.Models;
+namespace MovieApp.Areas.Cinema.Models;
 
 public class Comment
 {

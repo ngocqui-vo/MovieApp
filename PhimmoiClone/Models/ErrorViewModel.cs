@@ -1,4 +1,4 @@
-namespace PhimmoiClone.Models
+namespace MovieApp.Models
 {
     public class ErrorViewModel
     {

@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PhimmoiClone.Areas.Cinema.Models;
-using PhimmoiClone.Areas.Cinema.Repository.ActorRepo;
-using PhimmoiClone.Areas.Cinema.ViewModel;
-using PhimmoiClone.Data;
 
-namespace PhimmoiClone.Areas.Cinema.Controllers;
+using MovieApp.Areas.Cinema.Repository.ActorRepo;
+using MovieApp.Areas.Cinema.ViewModel;
+using MovieApp.Data;
+
+namespace MovieApp.Areas.Cinema.Controllers;
 
 [Area("Cinema")]
 [Route("Actor/[action]")]

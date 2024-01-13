@@ -2,11 +2,11 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PhimmoiClone.Areas.Identity.Models;
-using PhimmoiClone.Areas.Identity.ViewModels;
-using PhimmoiClone.Data;
+using MovieApp.Areas.Identity.Models;
+using MovieApp.Areas.Identity.ViewModels;
+using MovieApp.Data;
 
-namespace PhimmoiClone.Areas.Identity.Controllers;
+namespace MovieApp.Areas.Identity.Controllers;
 
 [Area("Identity")]
 [Route("User/[action]")]

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using PhimmoiClone.Areas.Cinema.Models;
+using MovieApp.Areas.Cinema.Models;
 
-namespace PhimmoiClone.Areas.Identity.Models;
+namespace MovieApp.Areas.Identity.Models;
 
 public class AppUser : IdentityUser
 {

@@ -1,7 +1,7 @@
-﻿using PhimmoiClone.Areas.Cinema.Models;
-using PhimmoiClone.Areas.Cinema.ViewModel;
+﻿using MovieApp.Areas.Cinema.Models;
+using MovieApp.Areas.Cinema.ViewModel;
 
-namespace PhimmoiClone.Areas.Cinema.Repository.GenreRepo;
+namespace MovieApp.Areas.Cinema.Repository.GenreRepo;
 
 public interface IGenreRepo
 {

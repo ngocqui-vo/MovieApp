@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PhimmoiClone.Areas.Identity.Models;
-using PhimmoiClone.Data;
+using MovieApp.Areas.Identity.Models;
+using MovieApp.Data;
 
-namespace PhimmoiClone.Areas.Database.Controllers;
+namespace MovieApp.Areas.Database.Controllers;
 
 [Area("Database")]
 [Route("Database/[action]")]

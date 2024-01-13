@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PhimmoiClone.Areas.Cinema.Models;
-using PhimmoiClone.Areas.Cinema.ViewModel;
-using PhimmoiClone.Areas.Identity.Models;
-using PhimmoiClone.Data;
+using MovieApp.Areas.Cinema.Models;
+using MovieApp.Areas.Cinema.ViewModel;
+using MovieApp.Areas.Identity.Models;
+using MovieApp.Data;
 
-namespace PhimmoiClone.Controllers;
+namespace MovieApp.Controllers;
 
 
 public class CommentController : Controller

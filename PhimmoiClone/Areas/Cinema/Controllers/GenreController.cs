@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PhimmoiClone.Areas.Cinema.Repository.GenreRepo;
-using PhimmoiClone.Areas.Cinema.Repository.MovieRepo;
-using PhimmoiClone.Areas.Cinema.ViewModel;
-using PhimmoiClone.Data;
+using MovieApp.Areas.Cinema.Repository.GenreRepo;
+using MovieApp.Areas.Cinema.Repository.MovieRepo;
+using MovieApp.Areas.Cinema.ViewModel;
+using MovieApp.Data;
 
-namespace PhimmoiClone.Areas.Cinema.Controllers;
+namespace MovieApp.Areas.Cinema.Controllers;
 [Area("Cinema")]
 [Route("Genre/[action]")]
 public class GenreController : Controller
