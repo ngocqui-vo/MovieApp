@@ -14,12 +14,12 @@
 }
 
 <!-- Carousel -->
-    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" style="max-height: 800px; overflow: hidden">
         <div class="carousel-inner">
             @for (int i = 0; i < newMovies?.Count; i++)
             {
                 <div class="carousel-item active">
-                    <img src="~/images/@newMovies?[i].MovieImages?[0].Path" class="d-block w-100" alt="Phim 1">
+                    <img src="~/images/@newMovies?[i].MovieImages?[0].Path" class="d-block w-100" alt="Phim 1" >
                 </div>
             }
             

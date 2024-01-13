@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PhimmoiClone.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using PhimmoiClone.Areas.Cinema.Models;
 using PhimmoiClone.Areas.Cinema.Repository.MovieRepo;
 using PhimmoiClone.Data;
 
 namespace PhimmoiClone.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -19,7 +22,7 @@ namespace PhimmoiClone.Controllers
             _repo = repo;
             _ctx = ctx;
         }
-
+        
         public async Task<IActionResult> Index(int page = 1, int pageSize = 3)
         {
             var movies = await _ctx.Movies

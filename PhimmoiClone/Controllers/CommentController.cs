@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PhimmoiClone.Areas.Cinema.Models;
@@ -7,6 +8,7 @@ using PhimmoiClone.Areas.Identity.Models;
 using PhimmoiClone.Data;
 
 namespace PhimmoiClone.Controllers;
+
 
 public class CommentController : Controller
 {
@@ -20,6 +22,7 @@ public class CommentController : Controller
         _userManager = userManager;
         _signInManager = signInManager;
     }
+    
 
     [HttpPost]
     public async Task<IActionResult> AddComment([FromBody]CommentViewModel vm)
